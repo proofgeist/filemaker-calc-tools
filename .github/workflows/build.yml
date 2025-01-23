@@ -73,6 +73,11 @@ jobs:
       - name: List contents of dist
         run: ls -la dist
 
+      - name: Set version from release tag
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          pnpm version $VERSION --no-git-tag-version
+
       - name: Publish to GitHub Packages
         run: pnpm publish --no-git-checks
         env:
