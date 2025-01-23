@@ -1,27 +1,15 @@
 # FileMaker Calc Tools
 
-A TypeScript library for validating and transpiling FileMaker calculations to JavaScript/TypeScript.
+A TypeScript library for validating and formatting FileMaker calculations.
 
 ## Features
 
 - Validate FileMaker calculations using ANTLR4 grammar
-- (Coming soon) Convert FileMaker calculations to TypeScript/JavaScript
+- Pretty print FileMaker calculations
 - Full TypeScript support
 - Supports both CommonJS and ES Modules
 
 ## Installation
-
-Since this is a private package hosted on GitHub, you'll need to set up authentication first:
-
-1. Create a GitHub Personal Access Token with `read:packages` scope
-2. Create a `.npmrc` file in your project with:
-
-```
-@proofgeist:registry=https://npm.pkg.github.com
-//npm.pkg.github.com/:_authToken=YOUR_GITHUB_PAT
-```
-
-Then install the package:
 
 ```bash
 # Using npm
@@ -31,17 +19,9 @@ npm install @proofgeist/filemaker-calc-tools
 pnpm add @proofgeist/filemaker-calc-tools
 ```
 
-Or add directly to your package.json:
-
-```json
-{
-  "dependencies": {
-    "@proofgeist/filemaker-calc-tools": "github:proofgeist/filemaker-calc-tools#main"
-  }
-}
-```
-
 ## Usage
+
+### Validating Calculations
 
 ```typescript
 import { FileMakerCalcValidator } from '@proofgeist/filemaker-calc-tools';
@@ -57,7 +37,52 @@ if (result.isValid) {
 }
 ```
 
+### Pretty Printing
+
+The pretty printer helps format FileMaker calculations with consistent indentation and line breaks. It's especially useful for making complex calculations more readable.
+
+```typescript
+import { FileMakerPrettyPrinter } from '@proofgeist/filemaker-calc-tools';
+
+// Basic usage
+const printer = new FileMakerPrettyPrinter();
+const formatted = printer.format('If(1+1=2;"True";"False")');
+console.log(formatted);
+// Output:
+// If(
+//   1 + 1 = 2;
+//   "True";
+//   "False"
+// )
+
+// Customizing indentation
+const customPrinter = new FileMakerPrettyPrinter({
+  indentChar: '  ', // Use 2 spaces instead of tabs (default is tabs)
+});
+
+// Complex example with Let function
+const letCalc = printer.format('Let([a=1+1;b=2+2];"Result: "&(a+b))');
+console.log(letCalc);
+// Output:
+// Let([
+//   a = 1 + 1;
+//   b = 2 + 2
+// ];
+//   "Result: " & (a + b)
+// )
+```
+
+The pretty printer will:
+
+- Format function arguments on new lines with proper indentation
+- Add spaces around operators for better readability
+- Format Let functions with aligned variable declarations
+- Validate function names and argument counts
+- Preserve string literals and field references
+
 ## Development
+
+**Note:** You will need a Java Runtime Environment (JRE) installed to run the `antlr4ts` command for parser generation.
 
 ```bash
 # Install dependencies
