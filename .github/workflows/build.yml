@@ -64,10 +64,12 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Set version from release tag
+      - name: Update version in package.json
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          pnpm version $VERSION --no-git-tag-version
+          # Extract version from ref (e.g., refs/tags/v1.0.4 -> 1.0.4)
+          VERSION=$(echo $GITHUB_REF | sed 's/refs\/tags\/v//')
+          # Update version in package.json without creating git tag
+          npm version $VERSION --no-git-tag-version --allow-same-version
 
       - name: Publish to GitHub Packages
         run: pnpm publish --no-git-checks
