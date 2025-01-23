@@ -1,0 +1,64 @@
+{
+  "name": "@your-github-username/filemaker-calc-tools",
+  "version": "1.0.0",
+  "description": "A TypeScript-based FileMaker calculation validator and transpiler",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-github-username/filemaker-calc-tools.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./dist/cjs/index.js",
+      "import": "./dist/esm/index.js",
+      "types": "./dist/types/index.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "antlr4ts": "antlr4ts -visitor FileMakerCalc.g4 -o src/generated",
+    "clean": "rimraf dist src/generated",
+    "prebuild": "npm run clean && npm run antlr4ts",
+    "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
+    "test": "pnpm run antlr4ts && vitest run",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "filemaker",
+    "calculator",
+    "validator",
+    "antlr",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "antlr4ts": "0.5.0-alpha.4",
+    "vitest": "^3.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "antlr4ts-cli": "0.5.0-alpha.4",
+    "eslint": "^8.37.0",
+    "jest": "^29.5.0",
+    "prettier": "^2.8.7",
+    "rimraf": "^4.4.1",
+    "ts-jest": "^29.1.0",
+    "typescript": "^5.0.3"
+  }
+}
