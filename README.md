@@ -11,6 +11,18 @@ A TypeScript library for validating and formatting FileMaker calculations.
 
 ## Installation
 
+Since this package is hosted on GitHub Packages, you'll need to authenticate:
+
+1. Create a GitHub Personal Access Token with `read:packages` scope
+2. Create a `.npmrc` file in your project with:
+
+```
+@proofgeist:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=YOUR_GITHUB_PAT
+```
+
+Then install the package:
+
 ```bash
 # Using npm
 npm install @proofgeist/filemaker-calc-tools
