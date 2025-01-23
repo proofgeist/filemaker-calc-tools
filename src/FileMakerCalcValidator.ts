@@ -19,6 +19,12 @@ class FunctionValidator
 
   visitFunctionCall(ctx: FunctionCallContext): void {
     const functionName = ctx.IDENTIFIER().text;
+
+    // Special case for Let function - it's handled by letFunction rule
+    if (functionName.toLowerCase() === 'let') {
+      return;
+    }
+
     const argCount = ctx.argumentList()?.expression()?.length || 0;
 
     const error = this.validator.isValidFunction(functionName, argCount);

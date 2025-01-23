@@ -49,24 +49,37 @@ describe('Miscellaneous Functions', () => {
 
   // Two argument functions
   describe('two argument functions', () => {
-    const twoArgFuncs = ['Let', 'Extend'];
+    describe('Let()', () => {
+      it('should validate with correct syntax', () => {
+        const errors = validator.validate('Let([x = 1]; x)');
+        expect(errors).toHaveLength(0);
+      });
 
-    twoArgFuncs.forEach((func) => {
-      describe(`${func}()`, () => {
-        it('should validate with correct argument count', () => {
-          const errors = validator.validate(`${func}("x", 1)`);
-          expect(errors).toHaveLength(0);
-        });
+      it('should error with incorrect syntax', () => {
+        const errors = validator.validate('Let("x", 1)');
+        expect(errors.length).toBeGreaterThan(0);
+      });
 
-        it('should error with too few arguments', () => {
-          const errors = validator.validate(`${func}("x")`);
-          expect(errors.length).toBeGreaterThan(0);
-        });
+      it('should validate with multiple declarations', () => {
+        const errors = validator.validate('Let([x = 1; y = 2]; x + y)');
+        expect(errors).toHaveLength(0);
+      });
+    });
 
-        it('should error with too many arguments', () => {
-          const errors = validator.validate(`${func}("x", 1, "extra")`);
-          expect(errors.length).toBeGreaterThan(0);
-        });
+    describe('Extend()', () => {
+      it('should validate with correct argument count', () => {
+        const errors = validator.validate('Extend("x", 1)');
+        expect(errors).toHaveLength(0);
+      });
+
+      it('should error with too few arguments', () => {
+        const errors = validator.validate('Extend("x")');
+        expect(errors.length).toBeGreaterThan(0);
+      });
+
+      it('should error with too many arguments', () => {
+        const errors = validator.validate('Extend("x", 1, "extra")');
+        expect(errors.length).toBeGreaterThan(0);
       });
     });
   });
