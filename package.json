@@ -25,7 +25,7 @@
     "LICENSE"
   ],
   "scripts": {
-    "antlr4ts": "antlr4ts -visitor FileMakerCalc.g4 -o src/generated",
+    "antlr4ts": "antlr4ts -visitor -listener FileMakerCalc.g4 -o src/generated",
     "clean": "rimraf dist src/generated",
     "prebuild": "npm run clean && npm run antlr4ts",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
@@ -46,6 +46,7 @@
   "license": "MIT",
   "dependencies": {
     "antlr4ts": "0.5.0-alpha.4",
+    "dedent": "^1.5.3",
     "vitest": "^3.0.3"
   },
   "devDependencies": {

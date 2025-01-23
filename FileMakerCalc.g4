@@ -8,7 +8,9 @@ calculation
 expression
     : literal                                                  # LiteralExpr
     | fieldReference                                          # FieldExpr
+    | letFunction                                             # LetExpr
     | functionCall                                            # FunctionExpr
+    | IDENTIFIER                                              # VariableExpr
     | '(' expression ')'                                      # ParenExpr
     | expression '[' expression ']'                           # RepetitionExpr
     | expression op=('*' | '/') expression                    # MultiplicativeExpr
@@ -20,12 +22,20 @@ expression
     | expression OR expression                                # OrExpr
     ;
 
+letFunction
+    : LET '(' '[' variableDeclaration+ ']' ';' expression ')'
+    ;
+
+variableDeclaration
+    : IDENTIFIER '=' expression ';'?
+    ;
+
 functionCall
     : IDENTIFIER '(' argumentList? ')'
     ;
 
 argumentList
-    : expression (',' expression)*
+    : expression ((',' | ';') expression)*
     ;
 
 fieldReference
@@ -42,6 +52,7 @@ literal
 AND: [Aa][Nn][Dd];
 OR: [Oo][Rr];
 NOT: [Nn][Oo][Tt];
+LET: [Ll][Ee][Tt];
 BOOLEAN: 'True' | 'False' | 'true' | 'false';
 
 NUMBER

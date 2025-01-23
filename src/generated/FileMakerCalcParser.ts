@@ -45,37 +45,43 @@ export class FileMakerCalcParser extends Parser {
 	public static readonly T__14 = 15;
 	public static readonly T__15 = 16;
 	public static readonly T__16 = 17;
-	public static readonly AND = 18;
-	public static readonly OR = 19;
-	public static readonly NOT = 20;
-	public static readonly BOOLEAN = 21;
-	public static readonly NUMBER = 22;
-	public static readonly STRING = 23;
-	public static readonly IDENTIFIER = 24;
-	public static readonly BLOCK_COMMENT = 25;
-	public static readonly LINE_COMMENT = 26;
-	public static readonly WS = 27;
+	public static readonly T__17 = 18;
+	public static readonly AND = 19;
+	public static readonly OR = 20;
+	public static readonly NOT = 21;
+	public static readonly LET = 22;
+	public static readonly BOOLEAN = 23;
+	public static readonly NUMBER = 24;
+	public static readonly STRING = 25;
+	public static readonly IDENTIFIER = 26;
+	public static readonly BLOCK_COMMENT = 27;
+	public static readonly LINE_COMMENT = 28;
+	public static readonly WS = 29;
 	public static readonly RULE_calculation = 0;
 	public static readonly RULE_expression = 1;
-	public static readonly RULE_functionCall = 2;
-	public static readonly RULE_argumentList = 3;
-	public static readonly RULE_fieldReference = 4;
-	public static readonly RULE_literal = 5;
+	public static readonly RULE_letFunction = 2;
+	public static readonly RULE_variableDeclaration = 3;
+	public static readonly RULE_functionCall = 4;
+	public static readonly RULE_argumentList = 5;
+	public static readonly RULE_fieldReference = 6;
+	public static readonly RULE_literal = 7;
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
-		"calculation", "expression", "functionCall", "argumentList", "fieldReference", 
-		"literal",
+		"calculation", "expression", "letFunction", "variableDeclaration", "functionCall", 
+		"argumentList", "fieldReference", "literal",
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
 		undefined, "'('", "')'", "'['", "']'", "'*'", "'/'", "'+'", "'-'", "'&'", 
-		"'='", "'\u2260'", "'<'", "'>'", "'\u2264'", "'\u2265'", "','", "'::'",
+		"'='", "'\u2260'", "'<'", "'>'", "'\u2264'", "'\u2265'", "';'", "','", 
+		"'::'",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
 		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
 		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, undefined, "AND", "OR", "NOT", "BOOLEAN", 
-		"NUMBER", "STRING", "IDENTIFIER", "BLOCK_COMMENT", "LINE_COMMENT", "WS",
+		undefined, undefined, undefined, undefined, undefined, "AND", "OR", "NOT", 
+		"LET", "BOOLEAN", "NUMBER", "STRING", "IDENTIFIER", "BLOCK_COMMENT", "LINE_COMMENT", 
+		"WS",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(FileMakerCalcParser._LITERAL_NAMES, FileMakerCalcParser._SYMBOLIC_NAMES, []);
 
@@ -110,9 +116,9 @@ export class FileMakerCalcParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 12;
+			this.state = 16;
 			this.expression(0);
-			this.state = 13;
+			this.state = 17;
 			this.match(FileMakerCalcParser.EOF);
 			}
 		}
@@ -150,7 +156,7 @@ export class FileMakerCalcParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 25;
+			this.state = 31;
 			this._errHandler.sync(this);
 			switch ( this.interpreter.adaptivePredict(this._input, 0, this._ctx) ) {
 			case 1:
@@ -159,7 +165,7 @@ export class FileMakerCalcParser extends Parser {
 				this._ctx = _localctx;
 				_prevctx = _localctx;
 
-				this.state = 16;
+				this.state = 20;
 				this.literal();
 				}
 				break;
@@ -169,49 +175,69 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new FieldExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 17;
+				this.state = 21;
 				this.fieldReference();
 				}
 				break;
 
 			case 3:
 				{
-				_localctx = new FunctionExprContext(_localctx);
+				_localctx = new LetExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 18;
-				this.functionCall();
+				this.state = 22;
+				this.letFunction();
 				}
 				break;
 
 			case 4:
 				{
-				_localctx = new ParenExprContext(_localctx);
+				_localctx = new FunctionExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 19;
-				this.match(FileMakerCalcParser.T__0);
-				this.state = 20;
-				this.expression(0);
-				this.state = 21;
-				this.match(FileMakerCalcParser.T__1);
+				this.state = 23;
+				this.functionCall();
 				}
 				break;
 
 			case 5:
 				{
+				_localctx = new VariableExprContext(_localctx);
+				this._ctx = _localctx;
+				_prevctx = _localctx;
+				this.state = 24;
+				this.match(FileMakerCalcParser.IDENTIFIER);
+				}
+				break;
+
+			case 6:
+				{
+				_localctx = new ParenExprContext(_localctx);
+				this._ctx = _localctx;
+				_prevctx = _localctx;
+				this.state = 25;
+				this.match(FileMakerCalcParser.T__0);
+				this.state = 26;
+				this.expression(0);
+				this.state = 27;
+				this.match(FileMakerCalcParser.T__1);
+				}
+				break;
+
+			case 7:
+				{
 				_localctx = new NotExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 23;
+				this.state = 29;
 				this.match(FileMakerCalcParser.NOT);
-				this.state = 24;
+				this.state = 30;
 				this.expression(3);
 				}
 				break;
 			}
 			this._ctx._stop = this._input.tryLT(-1);
-			this.state = 52;
+			this.state = 58;
 			this._errHandler.sync(this);
 			_alt = this.interpreter.adaptivePredict(this._input, 2, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
@@ -221,18 +247,18 @@ export class FileMakerCalcParser extends Parser {
 					}
 					_prevctx = _localctx;
 					{
-					this.state = 50;
+					this.state = 56;
 					this._errHandler.sync(this);
 					switch ( this.interpreter.adaptivePredict(this._input, 1, this._ctx) ) {
 					case 1:
 						{
 						_localctx = new MultiplicativeExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 27;
+						this.state = 33;
 						if (!(this.precpred(this._ctx, 7))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 7)");
 						}
-						this.state = 28;
+						this.state = 34;
 						(_localctx as MultiplicativeExprContext)._op = this._input.LT(1);
 						_la = this._input.LA(1);
 						if (!(_la === FileMakerCalcParser.T__4 || _la === FileMakerCalcParser.T__5)) {
@@ -245,7 +271,7 @@ export class FileMakerCalcParser extends Parser {
 							this._errHandler.reportMatch(this);
 							this.consume();
 						}
-						this.state = 29;
+						this.state = 35;
 						this.expression(8);
 						}
 						break;
@@ -254,11 +280,11 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new AdditiveExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 30;
+						this.state = 36;
 						if (!(this.precpred(this._ctx, 6))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 6)");
 						}
-						this.state = 31;
+						this.state = 37;
 						(_localctx as AdditiveExprContext)._op = this._input.LT(1);
 						_la = this._input.LA(1);
 						if (!(_la === FileMakerCalcParser.T__6 || _la === FileMakerCalcParser.T__7)) {
@@ -271,7 +297,7 @@ export class FileMakerCalcParser extends Parser {
 							this._errHandler.reportMatch(this);
 							this.consume();
 						}
-						this.state = 32;
+						this.state = 38;
 						this.expression(7);
 						}
 						break;
@@ -280,13 +306,13 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new ConcatenationExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 33;
+						this.state = 39;
 						if (!(this.precpred(this._ctx, 5))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 5)");
 						}
-						this.state = 34;
+						this.state = 40;
 						this.match(FileMakerCalcParser.T__8);
-						this.state = 35;
+						this.state = 41;
 						this.expression(6);
 						}
 						break;
@@ -295,11 +321,11 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new ComparisonExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 36;
+						this.state = 42;
 						if (!(this.precpred(this._ctx, 4))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 4)");
 						}
-						this.state = 37;
+						this.state = 43;
 						(_localctx as ComparisonExprContext)._op = this._input.LT(1);
 						_la = this._input.LA(1);
 						if (!((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << FileMakerCalcParser.T__9) | (1 << FileMakerCalcParser.T__10) | (1 << FileMakerCalcParser.T__11) | (1 << FileMakerCalcParser.T__12) | (1 << FileMakerCalcParser.T__13) | (1 << FileMakerCalcParser.T__14))) !== 0))) {
@@ -312,7 +338,7 @@ export class FileMakerCalcParser extends Parser {
 							this._errHandler.reportMatch(this);
 							this.consume();
 						}
-						this.state = 38;
+						this.state = 44;
 						this.expression(5);
 						}
 						break;
@@ -321,13 +347,13 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new AndExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 39;
+						this.state = 45;
 						if (!(this.precpred(this._ctx, 2))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 2)");
 						}
-						this.state = 40;
+						this.state = 46;
 						this.match(FileMakerCalcParser.AND);
-						this.state = 41;
+						this.state = 47;
 						this.expression(3);
 						}
 						break;
@@ -336,13 +362,13 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new OrExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 42;
+						this.state = 48;
 						if (!(this.precpred(this._ctx, 1))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 1)");
 						}
-						this.state = 43;
+						this.state = 49;
 						this.match(FileMakerCalcParser.OR);
-						this.state = 44;
+						this.state = 50;
 						this.expression(2);
 						}
 						break;
@@ -351,22 +377,22 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new RepetitionExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 45;
+						this.state = 51;
 						if (!(this.precpred(this._ctx, 8))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 8)");
 						}
-						this.state = 46;
+						this.state = 52;
 						this.match(FileMakerCalcParser.T__2);
-						this.state = 47;
+						this.state = 53;
 						this.expression(0);
-						this.state = 48;
+						this.state = 54;
 						this.match(FileMakerCalcParser.T__3);
 						}
 						break;
 					}
 					}
 				}
-				this.state = 54;
+				this.state = 60;
 				this._errHandler.sync(this);
 				_alt = this.interpreter.adaptivePredict(this._input, 2, this._ctx);
 			}
@@ -387,28 +413,120 @@ export class FileMakerCalcParser extends Parser {
 		return _localctx;
 	}
 	// @RuleVersion(0)
-	public functionCall(): FunctionCallContext {
-		let _localctx: FunctionCallContext = new FunctionCallContext(this._ctx, this.state);
-		this.enterRule(_localctx, 4, FileMakerCalcParser.RULE_functionCall);
+	public letFunction(): LetFunctionContext {
+		let _localctx: LetFunctionContext = new LetFunctionContext(this._ctx, this.state);
+		this.enterRule(_localctx, 4, FileMakerCalcParser.RULE_letFunction);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 55;
-			this.match(FileMakerCalcParser.IDENTIFIER);
-			this.state = 56;
+			this.state = 61;
+			this.match(FileMakerCalcParser.LET);
+			this.state = 62;
 			this.match(FileMakerCalcParser.T__0);
-			this.state = 58;
+			this.state = 63;
+			this.match(FileMakerCalcParser.T__2);
+			this.state = 65;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << FileMakerCalcParser.T__0) | (1 << FileMakerCalcParser.NOT) | (1 << FileMakerCalcParser.BOOLEAN) | (1 << FileMakerCalcParser.NUMBER) | (1 << FileMakerCalcParser.STRING) | (1 << FileMakerCalcParser.IDENTIFIER))) !== 0)) {
+			do {
 				{
-				this.state = 57;
+				{
+				this.state = 64;
+				this.variableDeclaration();
+				}
+				}
+				this.state = 67;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+			} while (_la === FileMakerCalcParser.IDENTIFIER);
+			this.state = 69;
+			this.match(FileMakerCalcParser.T__3);
+			this.state = 70;
+			this.match(FileMakerCalcParser.T__15);
+			this.state = 71;
+			this.expression(0);
+			this.state = 72;
+			this.match(FileMakerCalcParser.T__1);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public variableDeclaration(): VariableDeclarationContext {
+		let _localctx: VariableDeclarationContext = new VariableDeclarationContext(this._ctx, this.state);
+		this.enterRule(_localctx, 6, FileMakerCalcParser.RULE_variableDeclaration);
+		let _la: number;
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 74;
+			this.match(FileMakerCalcParser.IDENTIFIER);
+			this.state = 75;
+			this.match(FileMakerCalcParser.T__9);
+			this.state = 76;
+			this.expression(0);
+			this.state = 78;
+			this._errHandler.sync(this);
+			_la = this._input.LA(1);
+			if (_la === FileMakerCalcParser.T__15) {
+				{
+				this.state = 77;
+				this.match(FileMakerCalcParser.T__15);
+				}
+			}
+
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public functionCall(): FunctionCallContext {
+		let _localctx: FunctionCallContext = new FunctionCallContext(this._ctx, this.state);
+		this.enterRule(_localctx, 8, FileMakerCalcParser.RULE_functionCall);
+		let _la: number;
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 80;
+			this.match(FileMakerCalcParser.IDENTIFIER);
+			this.state = 81;
+			this.match(FileMakerCalcParser.T__0);
+			this.state = 83;
+			this._errHandler.sync(this);
+			_la = this._input.LA(1);
+			if ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << FileMakerCalcParser.T__0) | (1 << FileMakerCalcParser.NOT) | (1 << FileMakerCalcParser.LET) | (1 << FileMakerCalcParser.BOOLEAN) | (1 << FileMakerCalcParser.NUMBER) | (1 << FileMakerCalcParser.STRING) | (1 << FileMakerCalcParser.IDENTIFIER))) !== 0)) {
+				{
+				this.state = 82;
 				this.argumentList();
 				}
 			}
 
-			this.state = 60;
+			this.state = 85;
 			this.match(FileMakerCalcParser.T__1);
 			}
 		}
@@ -429,26 +547,36 @@ export class FileMakerCalcParser extends Parser {
 	// @RuleVersion(0)
 	public argumentList(): ArgumentListContext {
 		let _localctx: ArgumentListContext = new ArgumentListContext(this._ctx, this.state);
-		this.enterRule(_localctx, 6, FileMakerCalcParser.RULE_argumentList);
+		this.enterRule(_localctx, 10, FileMakerCalcParser.RULE_argumentList);
 		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 62;
+			this.state = 87;
 			this.expression(0);
-			this.state = 67;
+			this.state = 92;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			while (_la === FileMakerCalcParser.T__15) {
+			while (_la === FileMakerCalcParser.T__15 || _la === FileMakerCalcParser.T__16) {
 				{
 				{
-				this.state = 63;
-				this.match(FileMakerCalcParser.T__15);
-				this.state = 64;
+				this.state = 88;
+				_la = this._input.LA(1);
+				if (!(_la === FileMakerCalcParser.T__15 || _la === FileMakerCalcParser.T__16)) {
+				this._errHandler.recoverInline(this);
+				} else {
+					if (this._input.LA(1) === Token.EOF) {
+						this.matchedEOF = true;
+					}
+
+					this._errHandler.reportMatch(this);
+					this.consume();
+				}
+				this.state = 89;
 				this.expression(0);
 				}
 				}
-				this.state = 69;
+				this.state = 94;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -471,26 +599,26 @@ export class FileMakerCalcParser extends Parser {
 	// @RuleVersion(0)
 	public fieldReference(): FieldReferenceContext {
 		let _localctx: FieldReferenceContext = new FieldReferenceContext(this._ctx, this.state);
-		this.enterRule(_localctx, 8, FileMakerCalcParser.RULE_fieldReference);
+		this.enterRule(_localctx, 12, FileMakerCalcParser.RULE_fieldReference);
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 70;
+			this.state = 95;
 			this.match(FileMakerCalcParser.IDENTIFIER);
-			this.state = 71;
-			this.match(FileMakerCalcParser.T__16);
-			this.state = 72;
+			this.state = 96;
+			this.match(FileMakerCalcParser.T__17);
+			this.state = 97;
 			this.match(FileMakerCalcParser.IDENTIFIER);
-			this.state = 77;
+			this.state = 102;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input, 5, this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input, 7, this._ctx) ) {
 			case 1:
 				{
-				this.state = 73;
+				this.state = 98;
 				this.match(FileMakerCalcParser.T__2);
-				this.state = 74;
+				this.state = 99;
 				this.expression(0);
-				this.state = 75;
+				this.state = 100;
 				this.match(FileMakerCalcParser.T__3);
 				}
 				break;
@@ -514,16 +642,16 @@ export class FileMakerCalcParser extends Parser {
 	// @RuleVersion(0)
 	public literal(): LiteralContext {
 		let _localctx: LiteralContext = new LiteralContext(this._ctx, this.state);
-		this.enterRule(_localctx, 10, FileMakerCalcParser.RULE_literal);
+		this.enterRule(_localctx, 14, FileMakerCalcParser.RULE_literal);
 		try {
-			this.state = 82;
+			this.state = 107;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case FileMakerCalcParser.NUMBER:
 				_localctx = new NumberLiteralContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 79;
+				this.state = 104;
 				this.match(FileMakerCalcParser.NUMBER);
 				}
 				break;
@@ -531,7 +659,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new StringLiteralContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 80;
+				this.state = 105;
 				this.match(FileMakerCalcParser.STRING);
 				}
 				break;
@@ -539,7 +667,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new BooleanLiteralContext(_localctx);
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 81;
+				this.state = 106;
 				this.match(FileMakerCalcParser.BOOLEAN);
 				}
 				break;
@@ -596,44 +724,53 @@ export class FileMakerCalcParser extends Parser {
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\x1DW\x04\x02" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\x1Fp\x04\x02" +
 		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
-		"\t\x07\x03\x02\x03\x02\x03\x02\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
-		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x05\x03\x1C\n\x03\x03\x03\x03" +
+		"\t\x07\x04\b\t\b\x04\t\t\t\x03\x02\x03\x02\x03\x02\x03\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
+		"\x03\x05\x03\"\n\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
-		"\x03\x03\x03\x03\x03\x03\x03\x07\x035\n\x03\f\x03\x0E\x038\v\x03\x03\x04" +
-		"\x03\x04\x03\x04\x05\x04=\n\x04\x03\x04\x03\x04\x03\x05\x03\x05\x03\x05" +
-		"\x07\x05D\n\x05\f\x05\x0E\x05G\v\x05\x03\x06\x03\x06\x03\x06\x03\x06\x03" +
-		"\x06\x03\x06\x03\x06\x05\x06P\n\x06\x03\x07\x03\x07\x03\x07\x05\x07U\n" +
-		"\x07\x03\x07\x02\x02\x03\x04\b\x02\x02\x04\x02\x06\x02\b\x02\n\x02\f\x02" +
-		"\x02\x05\x03\x02\x07\b\x03\x02\t\n\x03\x02\f\x11\x02`\x02\x0E\x03\x02" +
-		"\x02\x02\x04\x1B\x03\x02\x02\x02\x069\x03\x02\x02\x02\b@\x03\x02\x02\x02" +
-		"\nH\x03\x02\x02\x02\fT\x03\x02\x02\x02\x0E\x0F\x05\x04\x03\x02\x0F\x10" +
-		"\x07\x02\x02\x03\x10\x03\x03\x02\x02\x02\x11\x12\b\x03\x01\x02\x12\x1C" +
-		"\x05\f\x07\x02\x13\x1C\x05\n\x06\x02\x14\x1C\x05\x06\x04\x02\x15\x16\x07" +
-		"\x03\x02\x02\x16\x17\x05\x04\x03\x02\x17\x18\x07\x04\x02\x02\x18\x1C\x03" +
-		"\x02\x02\x02\x19\x1A\x07\x16\x02\x02\x1A\x1C\x05\x04\x03\x05\x1B\x11\x03" +
-		"\x02\x02\x02\x1B\x13\x03\x02\x02\x02\x1B\x14\x03\x02\x02\x02\x1B\x15\x03" +
-		"\x02\x02\x02\x1B\x19\x03\x02\x02\x02\x1C6\x03\x02\x02\x02\x1D\x1E\f\t" +
-		"\x02\x02\x1E\x1F\t\x02\x02\x02\x1F5\x05\x04\x03\n !\f\b\x02\x02!\"\t\x03" +
-		"\x02\x02\"5\x05\x04\x03\t#$\f\x07\x02\x02$%\x07\v\x02\x02%5\x05\x04\x03" +
-		"\b&\'\f\x06\x02\x02\'(\t\x04\x02\x02(5\x05\x04\x03\x07)*\f\x04\x02\x02" +
-		"*+\x07\x14\x02\x02+5\x05\x04\x03\x05,-\f\x03\x02\x02-.\x07\x15\x02\x02" +
-		".5\x05\x04\x03\x04/0\f\n\x02\x0201\x07\x05\x02\x0212\x05\x04\x03\x022" +
-		"3\x07\x06\x02\x0235\x03\x02\x02\x024\x1D\x03\x02\x02\x024 \x03\x02\x02" +
-		"\x024#\x03\x02\x02\x024&\x03\x02\x02\x024)\x03\x02\x02\x024,\x03\x02\x02" +
-		"\x024/\x03\x02\x02\x0258\x03\x02\x02\x0264\x03\x02\x02\x0267\x03\x02\x02" +
-		"\x027\x05\x03\x02\x02\x0286\x03\x02\x02\x029:\x07\x1A\x02\x02:<\x07\x03" +
-		"\x02\x02;=\x05\b\x05\x02<;\x03\x02\x02\x02<=\x03\x02\x02\x02=>\x03\x02" +
-		"\x02\x02>?\x07\x04\x02\x02?\x07\x03\x02\x02\x02@E\x05\x04\x03\x02AB\x07" +
-		"\x12\x02\x02BD\x05\x04\x03\x02CA\x03\x02\x02\x02DG\x03\x02\x02\x02EC\x03" +
-		"\x02\x02\x02EF\x03\x02\x02\x02F\t\x03\x02\x02\x02GE\x03\x02\x02\x02HI" +
-		"\x07\x1A\x02\x02IJ\x07\x13\x02\x02JO\x07\x1A\x02\x02KL\x07\x05\x02\x02" +
-		"LM\x05\x04\x03\x02MN\x07\x06\x02\x02NP\x03\x02\x02\x02OK\x03\x02\x02\x02" +
-		"OP\x03\x02\x02\x02P\v\x03\x02\x02\x02QU\x07\x18\x02\x02RU\x07\x19\x02" +
-		"\x02SU\x07\x17\x02\x02TQ\x03\x02\x02\x02TR\x03\x02\x02\x02TS\x03\x02\x02" +
-		"\x02U\r\x03\x02\x02\x02\t\x1B46<EOT";
+		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x07\x03;" +
+		"\n\x03\f\x03\x0E\x03>\v\x03\x03\x04\x03\x04\x03\x04\x03\x04\x06\x04D\n" +
+		"\x04\r\x04\x0E\x04E\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03\x05\x03" +
+		"\x05\x03\x05\x03\x05\x05\x05Q\n\x05\x03\x06\x03\x06\x03\x06\x05\x06V\n" +
+		"\x06\x03\x06\x03\x06\x03\x07\x03\x07\x03\x07\x07\x07]\n\x07\f\x07\x0E" +
+		"\x07`\v\x07\x03\b\x03\b\x03\b\x03\b\x03\b\x03\b\x03\b\x05\bi\n\b\x03\t" +
+		"\x03\t\x03\t\x05\tn\n\t\x03\t\x02\x02\x03\x04\n\x02\x02\x04\x02\x06\x02" +
+		"\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x02\x06\x03\x02\x07\b\x03\x02\t\n\x03" +
+		"\x02\f\x11\x03\x02\x12\x13\x02{\x02\x12\x03\x02\x02\x02\x04!\x03\x02\x02" +
+		"\x02\x06?\x03\x02\x02\x02\bL\x03\x02\x02\x02\nR\x03\x02\x02\x02\fY\x03" +
+		"\x02\x02\x02\x0Ea\x03\x02\x02\x02\x10m\x03\x02\x02\x02\x12\x13\x05\x04" +
+		"\x03\x02\x13\x14\x07\x02\x02\x03\x14\x03\x03\x02\x02\x02\x15\x16\b\x03" +
+		"\x01\x02\x16\"\x05\x10\t\x02\x17\"\x05\x0E\b\x02\x18\"\x05\x06\x04\x02" +
+		"\x19\"\x05\n\x06\x02\x1A\"\x07\x1C\x02\x02\x1B\x1C\x07\x03\x02\x02\x1C" +
+		"\x1D\x05\x04\x03\x02\x1D\x1E\x07\x04\x02\x02\x1E\"\x03\x02\x02\x02\x1F" +
+		" \x07\x17\x02\x02 \"\x05\x04\x03\x05!\x15\x03\x02\x02\x02!\x17\x03\x02" +
+		"\x02\x02!\x18\x03\x02\x02\x02!\x19\x03\x02\x02\x02!\x1A\x03\x02\x02\x02" +
+		"!\x1B\x03\x02\x02\x02!\x1F\x03\x02\x02\x02\"<\x03\x02\x02\x02#$\f\t\x02" +
+		"\x02$%\t\x02\x02\x02%;\x05\x04\x03\n&\'\f\b\x02\x02\'(\t\x03\x02\x02(" +
+		";\x05\x04\x03\t)*\f\x07\x02\x02*+\x07\v\x02\x02+;\x05\x04\x03\b,-\f\x06" +
+		"\x02\x02-.\t\x04\x02\x02.;\x05\x04\x03\x07/0\f\x04\x02\x0201\x07\x15\x02" +
+		"\x021;\x05\x04\x03\x0523\f\x03\x02\x0234\x07\x16\x02\x024;\x05\x04\x03" +
+		"\x0456\f\n\x02\x0267\x07\x05\x02\x0278\x05\x04\x03\x0289\x07\x06\x02\x02" +
+		"9;\x03\x02\x02\x02:#\x03\x02\x02\x02:&\x03\x02\x02\x02:)\x03\x02\x02\x02" +
+		":,\x03\x02\x02\x02:/\x03\x02\x02\x02:2\x03\x02\x02\x02:5\x03\x02\x02\x02" +
+		";>\x03\x02\x02\x02<:\x03\x02\x02\x02<=\x03\x02\x02\x02=\x05\x03\x02\x02" +
+		"\x02><\x03\x02\x02\x02?@\x07\x18\x02\x02@A\x07\x03\x02\x02AC\x07\x05\x02" +
+		"\x02BD\x05\b\x05\x02CB\x03\x02\x02\x02DE\x03\x02\x02\x02EC\x03\x02\x02" +
+		"\x02EF\x03\x02\x02\x02FG\x03\x02\x02\x02GH\x07\x06\x02\x02HI\x07\x12\x02" +
+		"\x02IJ\x05\x04\x03\x02JK\x07\x04\x02\x02K\x07\x03\x02\x02\x02LM\x07\x1C" +
+		"\x02\x02MN\x07\f\x02\x02NP\x05\x04\x03\x02OQ\x07\x12\x02\x02PO\x03\x02" +
+		"\x02\x02PQ\x03\x02\x02\x02Q\t\x03\x02\x02\x02RS\x07\x1C\x02\x02SU\x07" +
+		"\x03\x02\x02TV\x05\f\x07\x02UT\x03\x02\x02\x02UV\x03\x02\x02\x02VW\x03" +
+		"\x02\x02\x02WX\x07\x04\x02\x02X\v\x03\x02\x02\x02Y^\x05\x04\x03\x02Z[" +
+		"\t\x05\x02\x02[]\x05\x04\x03\x02\\Z\x03\x02\x02\x02]`\x03\x02\x02\x02" +
+		"^\\\x03\x02\x02\x02^_\x03\x02\x02\x02_\r\x03\x02\x02\x02`^\x03\x02\x02" +
+		"\x02ab\x07\x1C\x02\x02bc\x07\x14\x02\x02ch\x07\x1C\x02\x02de\x07\x05\x02" +
+		"\x02ef\x05\x04\x03\x02fg\x07\x06\x02\x02gi\x03\x02\x02\x02hd\x03\x02\x02" +
+		"\x02hi\x03\x02\x02\x02i\x0F\x03\x02\x02\x02jn\x07\x1A\x02\x02kn\x07\x1B" +
+		"\x02\x02ln\x07\x19\x02\x02mj\x03\x02\x02\x02mk\x03\x02\x02\x02ml\x03\x02" +
+		"\x02\x02n\x11\x03\x02\x02\x02\v!:<EPU^hm";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!FileMakerCalcParser.__ATN) {
@@ -746,6 +883,35 @@ export class FieldExprContext extends ExpressionContext {
 		}
 	}
 }
+export class LetExprContext extends ExpressionContext {
+	public letFunction(): LetFunctionContext {
+		return this.getRuleContext(0, LetFunctionContext);
+	}
+	constructor(ctx: ExpressionContext) {
+		super(ctx.parent, ctx.invokingState);
+		this.copyFrom(ctx);
+	}
+	// @Override
+	public enterRule(listener: FileMakerCalcListener): void {
+		if (listener.enterLetExpr) {
+			listener.enterLetExpr(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: FileMakerCalcListener): void {
+		if (listener.exitLetExpr) {
+			listener.exitLetExpr(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: FileMakerCalcVisitor<Result>): Result {
+		if (visitor.visitLetExpr) {
+			return visitor.visitLetExpr(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
 export class FunctionExprContext extends ExpressionContext {
 	public functionCall(): FunctionCallContext {
 		return this.getRuleContext(0, FunctionCallContext);
@@ -770,6 +936,33 @@ export class FunctionExprContext extends ExpressionContext {
 	public accept<Result>(visitor: FileMakerCalcVisitor<Result>): Result {
 		if (visitor.visitFunctionExpr) {
 			return visitor.visitFunctionExpr(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+export class VariableExprContext extends ExpressionContext {
+	public IDENTIFIER(): TerminalNode { return this.getToken(FileMakerCalcParser.IDENTIFIER, 0); }
+	constructor(ctx: ExpressionContext) {
+		super(ctx.parent, ctx.invokingState);
+		this.copyFrom(ctx);
+	}
+	// @Override
+	public enterRule(listener: FileMakerCalcListener): void {
+		if (listener.enterVariableExpr) {
+			listener.enterVariableExpr(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: FileMakerCalcListener): void {
+		if (listener.exitVariableExpr) {
+			listener.exitVariableExpr(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: FileMakerCalcVisitor<Result>): Result {
+		if (visitor.visitVariableExpr) {
+			return visitor.visitVariableExpr(this);
 		} else {
 			return visitor.visitChildren(this);
 		}
@@ -1079,6 +1272,81 @@ export class OrExprContext extends ExpressionContext {
 	public accept<Result>(visitor: FileMakerCalcVisitor<Result>): Result {
 		if (visitor.visitOrExpr) {
 			return visitor.visitOrExpr(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
+export class LetFunctionContext extends ParserRuleContext {
+	public LET(): TerminalNode { return this.getToken(FileMakerCalcParser.LET, 0); }
+	public expression(): ExpressionContext {
+		return this.getRuleContext(0, ExpressionContext);
+	}
+	public variableDeclaration(): VariableDeclarationContext[];
+	public variableDeclaration(i: number): VariableDeclarationContext;
+	public variableDeclaration(i?: number): VariableDeclarationContext | VariableDeclarationContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(VariableDeclarationContext);
+		} else {
+			return this.getRuleContext(i, VariableDeclarationContext);
+		}
+	}
+	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+		super(parent, invokingState);
+	}
+	// @Override
+	public get ruleIndex(): number { return FileMakerCalcParser.RULE_letFunction; }
+	// @Override
+	public enterRule(listener: FileMakerCalcListener): void {
+		if (listener.enterLetFunction) {
+			listener.enterLetFunction(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: FileMakerCalcListener): void {
+		if (listener.exitLetFunction) {
+			listener.exitLetFunction(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: FileMakerCalcVisitor<Result>): Result {
+		if (visitor.visitLetFunction) {
+			return visitor.visitLetFunction(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
+export class VariableDeclarationContext extends ParserRuleContext {
+	public IDENTIFIER(): TerminalNode { return this.getToken(FileMakerCalcParser.IDENTIFIER, 0); }
+	public expression(): ExpressionContext {
+		return this.getRuleContext(0, ExpressionContext);
+	}
+	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+		super(parent, invokingState);
+	}
+	// @Override
+	public get ruleIndex(): number { return FileMakerCalcParser.RULE_variableDeclaration; }
+	// @Override
+	public enterRule(listener: FileMakerCalcListener): void {
+		if (listener.enterVariableDeclaration) {
+			listener.enterVariableDeclaration(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: FileMakerCalcListener): void {
+		if (listener.exitVariableDeclaration) {
+			listener.exitVariableDeclaration(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: FileMakerCalcVisitor<Result>): Result {
+		if (visitor.visitVariableDeclaration) {
+			return visitor.visitVariableDeclaration(this);
 		} else {
 			return visitor.visitChildren(this);
 		}

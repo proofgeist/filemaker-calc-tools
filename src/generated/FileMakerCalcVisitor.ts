@@ -5,7 +5,9 @@ import { ParseTreeVisitor } from "antlr4ts/tree/ParseTreeVisitor";
 
 import { LiteralExprContext } from "./FileMakerCalcParser";
 import { FieldExprContext } from "./FileMakerCalcParser";
+import { LetExprContext } from "./FileMakerCalcParser";
 import { FunctionExprContext } from "./FileMakerCalcParser";
+import { VariableExprContext } from "./FileMakerCalcParser";
 import { ParenExprContext } from "./FileMakerCalcParser";
 import { RepetitionExprContext } from "./FileMakerCalcParser";
 import { MultiplicativeExprContext } from "./FileMakerCalcParser";
@@ -20,6 +22,8 @@ import { StringLiteralContext } from "./FileMakerCalcParser";
 import { BooleanLiteralContext } from "./FileMakerCalcParser";
 import { CalculationContext } from "./FileMakerCalcParser";
 import { ExpressionContext } from "./FileMakerCalcParser";
+import { LetFunctionContext } from "./FileMakerCalcParser";
+import { VariableDeclarationContext } from "./FileMakerCalcParser";
 import { FunctionCallContext } from "./FileMakerCalcParser";
 import { ArgumentListContext } from "./FileMakerCalcParser";
 import { FieldReferenceContext } from "./FileMakerCalcParser";
@@ -51,12 +55,28 @@ export interface FileMakerCalcVisitor<Result> extends ParseTreeVisitor<Result> {
 	visitFieldExpr?: (ctx: FieldExprContext) => Result;
 
 	/**
+	 * Visit a parse tree produced by the `LetExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitLetExpr?: (ctx: LetExprContext) => Result;
+
+	/**
 	 * Visit a parse tree produced by the `FunctionExpr`
 	 * labeled alternative in `FileMakerCalcParser.expression`.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	visitFunctionExpr?: (ctx: FunctionExprContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `VariableExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitVariableExpr?: (ctx: VariableExprContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by the `ParenExpr`
@@ -167,6 +187,20 @@ export interface FileMakerCalcVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitExpression?: (ctx: ExpressionContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `FileMakerCalcParser.letFunction`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitLetFunction?: (ctx: LetFunctionContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `FileMakerCalcParser.variableDeclaration`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitVariableDeclaration?: (ctx: VariableDeclarationContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `FileMakerCalcParser.functionCall`.
