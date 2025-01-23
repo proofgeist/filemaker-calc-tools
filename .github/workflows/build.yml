@@ -10,6 +10,8 @@ on:
 
 jobs:
   build:
+    # Skip build job on release since we'll build in publish job
+    if: github.event_name != 'release'
     runs-on: ubuntu-latest
 
     steps:
@@ -31,14 +33,11 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: dist
-          path: dist/
+      - name: Test
+        run: pnpm test
 
   publish:
-    needs: build
+    # Only run on release, no need for build dependency now
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     permissions:
@@ -63,6 +62,9 @@ jobs:
 
       - name: Build
         run: pnpm run build
+
+      - name: Test
+        run: pnpm test
 
       - name: Update version in package.json
         run: |
