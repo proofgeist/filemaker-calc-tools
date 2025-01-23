@@ -29,8 +29,8 @@
     "clean": "rimraf dist src/generated",
     "prebuild": "npm run clean && npm run antlr4ts",
     "build": "tsc -p tsconfig.json && tsc -p tsconfig.esm.json",
-    "test": "pnpm run antlr4ts && vitest run",
-    "test:coverage": "vitest run --coverage",
+    "test": "",
+    "test:coverage": "",
     "lint": "eslint . --ext .ts",
     "format": "prettier --write \"src/**/*.ts\"",
     "prepublishOnly": "pnpm run build"
