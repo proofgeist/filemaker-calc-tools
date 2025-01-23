@@ -1,10 +1,10 @@
 {
-  "name": "@your-github-username/filemaker-calc-tools",
+  "name": "@proofgeist/filemaker-calc-tools",
   "version": "1.0.0",
   "description": "A TypeScript-based FileMaker calculation validator and transpiler",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-github-username/filemaker-calc-tools.git"
+    "url": "git+https://github.com/proofgeist/filemaker-calc-tools.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -42,7 +42,7 @@
     "antlr",
     "typescript"
   ],
-  "author": "",
+  "author": "Todd Geist, toddgeist@proofgeist.com",
   "license": "MIT",
   "dependencies": {
     "antlr4ts": "0.5.0-alpha.4",
