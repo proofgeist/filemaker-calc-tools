@@ -18,7 +18,6 @@ export class FileMakerCalcFormatter {
   private removeStrings(): boolean {
     let calc2 = this.calc;
     let leftPos = -1;
-    console.log('Starting removeStrings with calc:', calc2);
 
     while (
       (leftPos = this.minButNotBlank(
@@ -26,23 +25,14 @@ export class FileMakerCalcFormatter {
         calc2.indexOf('/*')
       )) >= 0
     ) {
-      console.log('Loop iteration:');
-      console.log('  Quote position:', calc2.indexOf('"'));
-      console.log('  Comment position:', calc2.indexOf('//'));
-      console.log('  Block comment position:', calc2.indexOf('/*'));
-      console.log('  Selected leftPos:', leftPos);
-
       let rightPos = -1;
       if (calc2.charAt(leftPos) === '"') {
         rightPos = calc2.indexOf('"', leftPos + 1);
-        console.log('Found closing quote at:', rightPos);
         if (rightPos < 0) return false;
         const stringContent = calc2.substring(leftPos, rightPos + 1);
-        console.log('String content:', stringContent);
         const placeholder = `__STR${this.placeholderCounter++}__`;
         this.stringStack.push({ content: stringContent, placeholder });
         calc2 = calc2.substring(0, leftPos) + placeholder + calc2.substring(rightPos + 1);
-        console.log('Modified calc:', calc2);
       } else if (calc2.charAt(leftPos + 1) === '/') {
         rightPos = calc2.indexOf('\n', leftPos);
         if (rightPos < 0) rightPos = calc2.length;
@@ -59,7 +49,6 @@ export class FileMakerCalcFormatter {
         calc2 = calc2.substring(0, leftPos) + placeholder + calc2.substring(rightPos + 2);
       }
     }
-    console.log('Finished removeStrings, final calc:', calc2);
     this.calc = calc2;
     return true;
   }
@@ -110,18 +99,13 @@ export class FileMakerCalcFormatter {
   }
 
   private minButNotBlank(a: number, b: number): number {
-    console.log('minButNotBlank called with:', { a, b });
     if (a < 0) {
-      console.log('a < 0, returning b:', b);
       return b;
     }
     if (b < 0) {
-      console.log('b < 0, returning a:', a);
       return a;
     }
-    const result = Math.min(a, b);
-    console.log('returning min:', result);
-    return result;
+    return Math.min(a, b);
   }
 
   public format(): string {
@@ -142,10 +126,7 @@ export class FileMakerCalcFormatter {
 }
 
 export function formatFmCalc(calc: string): string {
-  console.log('STARTED formatFmCalc');
-  console.log('Creating formatter with calc:', calc);
   const formatter = new FileMakerCalcFormatter(calc);
-  console.log('Formatter created, calling format()');
   return formatter.format();
 }
 
