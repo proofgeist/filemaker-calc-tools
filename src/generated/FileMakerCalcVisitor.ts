@@ -7,6 +7,8 @@ import { LiteralExprContext } from "./FileMakerCalcParser";
 import { FieldExprContext } from "./FileMakerCalcParser";
 import { LetExprContext } from "./FileMakerCalcParser";
 import { FunctionExprContext } from "./FileMakerCalcParser";
+import { GlobalVarExprContext } from "./FileMakerCalcParser";
+import { LocalVarExprContext } from "./FileMakerCalcParser";
 import { VariableExprContext } from "./FileMakerCalcParser";
 import { ParenExprContext } from "./FileMakerCalcParser";
 import { RepetitionExprContext } from "./FileMakerCalcParser";
@@ -69,6 +71,22 @@ export interface FileMakerCalcVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitFunctionExpr?: (ctx: FunctionExprContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `GlobalVarExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitGlobalVarExpr?: (ctx: GlobalVarExprContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `LocalVarExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitLocalVarExpr?: (ctx: LocalVarExprContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by the `VariableExpr`

@@ -7,6 +7,8 @@ import { LiteralExprContext } from "./FileMakerCalcParser";
 import { FieldExprContext } from "./FileMakerCalcParser";
 import { LetExprContext } from "./FileMakerCalcParser";
 import { FunctionExprContext } from "./FileMakerCalcParser";
+import { GlobalVarExprContext } from "./FileMakerCalcParser";
+import { LocalVarExprContext } from "./FileMakerCalcParser";
 import { VariableExprContext } from "./FileMakerCalcParser";
 import { ParenExprContext } from "./FileMakerCalcParser";
 import { RepetitionExprContext } from "./FileMakerCalcParser";
@@ -86,6 +88,32 @@ export interface FileMakerCalcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitFunctionExpr?: (ctx: FunctionExprContext) => void;
+
+	/**
+	 * Enter a parse tree produced by the `GlobalVarExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterGlobalVarExpr?: (ctx: GlobalVarExprContext) => void;
+	/**
+	 * Exit a parse tree produced by the `GlobalVarExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitGlobalVarExpr?: (ctx: GlobalVarExprContext) => void;
+
+	/**
+	 * Enter a parse tree produced by the `LocalVarExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterLocalVarExpr?: (ctx: LocalVarExprContext) => void;
+	/**
+	 * Exit a parse tree produced by the `LocalVarExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitLocalVarExpr?: (ctx: LocalVarExprContext) => void;
 
 	/**
 	 * Enter a parse tree produced by the `VariableExpr`

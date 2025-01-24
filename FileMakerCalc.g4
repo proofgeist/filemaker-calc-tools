@@ -10,6 +10,8 @@ expression
     | fieldReference                                          # FieldExpr
     | letFunction                                             # LetExpr
     | functionCall                                            # FunctionExpr
+    | GLOBAL_VAR                                             # GlobalVarExpr
+    | LOCAL_VAR                                              # LocalVarExpr
     | IDENTIFIER                                              # VariableExpr
     | '(' expression ')'                                      # ParenExpr
     | expression '[' expression ']'                           # RepetitionExpr
@@ -62,6 +64,8 @@ NUMBER
 
 STRING: '"' (~["\r\n] | '""')* '"';
 
+GLOBAL_VAR: '$$' [a-zA-Z_][a-zA-Z0-9_]*;
+LOCAL_VAR: '$' [a-zA-Z_][a-zA-Z0-9_]*;
 IDENTIFIER: [a-zA-Z_][a-zA-Z0-9_]*;
 
 // Comments
