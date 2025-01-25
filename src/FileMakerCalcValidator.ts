@@ -207,10 +207,6 @@ export class FileMakerCalcValidator {
     // Get syntax errors from the listener
     errors.push(...errorListener.getErrors());
 
-    if (errors.length > 0) {
-      console.log('Validation errors:', errors);
-    }
-
     return errors;
   }
 
