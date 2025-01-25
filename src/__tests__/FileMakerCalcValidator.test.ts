@@ -95,8 +95,7 @@ describe('FileMakerCalcValidator', () => {
       });
     });
 
-
-    describe.only('JSON Constants', () => {
+    describe('JSON Constants', () => {
       it('should not catch JSONString', () => {
         const errors = validator.validate('JSONString');
         expect(errors).toHaveLength(0);
