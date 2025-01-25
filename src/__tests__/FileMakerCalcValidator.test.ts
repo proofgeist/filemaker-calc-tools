@@ -77,5 +77,10 @@ describe('FileMakerCalcValidator', () => {
       const errors = validator.validate('Left("test", 1)');
       expect(errors).toHaveLength(0);
     });
+
+    it.only('should not catch Get(AccountGroupName))', () => {
+      const errors = validator.validate('Get(AccountGroupName)');
+      expect(errors).toHaveLength(0);
+    });
   });
 });

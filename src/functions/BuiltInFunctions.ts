@@ -72,4 +72,11 @@ export class BuiltInFunctions {
   public static getFunctionNames(): string[] {
     return this.functions.map((f) => f.name);
   }
+
+  /**
+   * Returns a function definition by name
+   */
+  public static getFunction(name: string): FunctionDefinition | undefined {
+    return this.functions.find((f) => f.name.toLowerCase() === name.toLowerCase());
+  }
 }

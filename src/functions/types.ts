@@ -4,4 +4,5 @@ export interface FunctionDefinition {
   maxArgs: number;
   description?: string;
   category?: string;
+  validateArgs?: (args: string[]) => string | null;
 }

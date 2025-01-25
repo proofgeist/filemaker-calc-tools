@@ -13,6 +13,7 @@ import {
   LetFunctionContext,
   VariableDeclarationContext,
 } from './generated/FileMakerCalcParser';
+import { GET_CONSTANTS } from './functions/categories/GetFunctions';
 
 class ScopeValidator extends AbstractParseTreeVisitor<void> implements FileMakerCalcVisitor<void> {
   private currentLetScope: Set<string> = new Set();
@@ -43,13 +44,30 @@ class ScopeValidator extends AbstractParseTreeVisitor<void> implements FileMaker
   visitVariableExpr(ctx: VariableExprContext): void {
     const varName = ctx.IDENTIFIER().text;
 
-    // Skip validation if we're inside a function call (it's the function name)
+    // Check if we're inside a function call
     if (ctx.parent instanceof FunctionCallContext) {
-      return;
+      const functionCall = ctx.parent as FunctionCallContext;
+      const functionName = functionCall.IDENTIFIER().text;
+
+      // Skip validation for the function name itself
+      if (functionCall.IDENTIFIER().symbol.tokenIndex === ctx.IDENTIFIER().symbol.tokenIndex) {
+        return;
+      }
+
+      // Handle Get function parameters
+      if (functionName.toLowerCase() === 'get') {
+        // Skip validation for Get function parameters - they are handled by FunctionValidator
+        return;
+      }
     }
 
     // Skip validation if we're in a field reference
     if (ctx.parent?.text.includes('::')) {
+      return;
+    }
+
+    // Skip validation for Get constants used outside Get function
+    if (GET_CONSTANTS.has(varName)) {
       return;
     }
 
@@ -87,12 +105,49 @@ class FunctionValidator
       return;
     }
 
-    const argCount = ctx.argumentList()?.expression()?.length || 0;
+    const args = ctx.argumentList()?.expression() || [];
+    const argCount = args.length;
 
+    // First check if the function exists and has correct number of arguments
     const error = this.validator.isValidFunction(functionName, argCount);
     if (error) {
       this.errors.push(
         new ValidationError(error, {
+          line: ctx.start.line,
+          column: ctx.start.charPositionInLine,
+        })
+      );
+      return;
+    }
+
+    // Special handling for Get function parameters
+    if (functionName.toLowerCase() === 'get' && args.length === 1) {
+      const param = args[0].text;
+      // Remove quotes if present
+      const cleanParam = param.replace(/^["']|["']$/g, '');
+      // Validate all Get parameters, whether quoted or not
+      if (!GET_CONSTANTS.has(cleanParam)) {
+        this.errors.push(
+          new ValidationError(
+            `Invalid Get function parameter: "${cleanParam}". Must be one of the valid Get constants.`,
+            {
+              line: ctx.start.line,
+              column: ctx.start.charPositionInLine,
+            }
+          )
+        );
+      }
+      return;
+    }
+
+    // Then check argument validation if available
+    const argValidationError = this.validator.validateFunctionArgs(
+      functionName,
+      args.map((arg) => arg.text)
+    );
+    if (argValidationError) {
+      this.errors.push(
+        new ValidationError(argValidationError, {
           line: ctx.start.line,
           column: ctx.start.charPositionInLine,
         })
@@ -146,6 +201,10 @@ export class FileMakerCalcValidator {
     // Get syntax errors from the listener
     errors.push(...errorListener.getErrors());
 
+    if (errors.length > 0) {
+      console.log('Validation errors:', errors);
+    }
+
     return errors;
   }
 
@@ -165,5 +224,16 @@ export class FileMakerCalcValidator {
     }
 
     return builtInError;
+  }
+
+  /**
+   * Validates function arguments if the function has a validateArgs function
+   */
+  public validateFunctionArgs(name: string, args: string[]): string | null {
+    const func = BuiltInFunctions.getFunction(name.toLowerCase());
+    if (func?.validateArgs) {
+      return func.validateArgs(args);
+    }
+    return null;
   }
 }

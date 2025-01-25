@@ -113,6 +113,34 @@ pnpm test
 pnpm run test:coverage
 ```
 
+## Publishing New Versions
+
+To publish a new version:
+
+1. Update version in `package.json`:
+
+   ```json
+   {
+     "version": "x.y.z"
+   }
+   ```
+
+2. Commit the changes:
+
+   ```bash
+   git add package.json
+   git commit -m "fix: description of changes"
+   ```
+
+3. Create and push a new tag:
+
+   ```bash
+   git tag -a vx.y.z -m "Version x.y.z"
+   git push origin main --tags
+   ```
+
+4. The GitHub Action will automatically publish to GitHub Packages
+
 ## License
 
 MIT
