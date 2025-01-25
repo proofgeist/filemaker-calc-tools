@@ -1,6 +1,6 @@
 {
   "name": "@proofgeist/filemaker-calc-tools",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A TypeScript-based FileMaker calculation validator and transpiler",
   "repository": {
     "type": "git",
