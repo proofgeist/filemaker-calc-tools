@@ -48,6 +48,7 @@ literal
     : NUMBER                    # NumberLiteral
     | STRING                    # StringLiteral
     | BOOLEAN                   # BooleanLiteral
+    | JSON_CONSTANT            # JsonConstantLiteral
     ;
 
 // Lexer Rules
@@ -76,4 +77,15 @@ LINE_COMMENT: '//' ~[\r\n]* -> skip;
 WS: [ \t\r\n]+ -> skip;
 
 // Fragments
-fragment DIGIT: [0-9]; 
+fragment DIGIT: [0-9];
+
+// Lexer Rules
+JSON_CONSTANT
+    : 'JSONString'
+    | 'JSONNumber'
+    | 'JSONObject'
+    | 'JSONArray'
+    | 'JSONBoolean'
+    | 'JSONNull'
+    | 'JSONRaw'
+    ; 

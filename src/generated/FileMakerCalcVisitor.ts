@@ -22,6 +22,7 @@ import { OrExprContext } from "./FileMakerCalcParser";
 import { NumberLiteralContext } from "./FileMakerCalcParser";
 import { StringLiteralContext } from "./FileMakerCalcParser";
 import { BooleanLiteralContext } from "./FileMakerCalcParser";
+import { JsonConstantLiteralContext } from "./FileMakerCalcParser";
 import { CalculationContext } from "./FileMakerCalcParser";
 import { ExpressionContext } from "./FileMakerCalcParser";
 import { LetFunctionContext } from "./FileMakerCalcParser";
@@ -191,6 +192,14 @@ export interface FileMakerCalcVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitBooleanLiteral?: (ctx: BooleanLiteralContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `JsonConstantLiteral`
+	 * labeled alternative in `FileMakerCalcParser.literal`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitJsonConstantLiteral?: (ctx: JsonConstantLiteralContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `FileMakerCalcParser.calculation`.

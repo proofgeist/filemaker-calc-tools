@@ -78,9 +78,59 @@ describe('FileMakerCalcValidator', () => {
       expect(errors).toHaveLength(0);
     });
 
-    it.only('should not catch Get(AccountGroupName))', () => {
+    it('should not catch Get(AccountGroupName))', () => {
       const errors = validator.validate('Get(AccountGroupName)');
       expect(errors).toHaveLength(0);
+    });
+
+    describe('True and False', () => {
+      it('should not catch True', () => {
+        const errors = validator.validate('True');
+        expect(errors).toHaveLength(0);
+      });
+
+      it('should not catch False', () => {
+        const errors = validator.validate('False');
+        expect(errors).toHaveLength(0);
+      });
+    });
+
+
+    describe.only('JSON Constants', () => {
+      it('should not catch JSONString', () => {
+        const errors = validator.validate('JSONString');
+        expect(errors).toHaveLength(0);
+      });
+
+      it('should not catch JSONNumber', () => {
+        const errors = validator.validate('JSONNumber');
+        expect(errors).toHaveLength(0);
+      });
+
+      it('should not catch JSONObject', () => {
+        const errors = validator.validate('JSONObject');
+        expect(errors).toHaveLength(0);
+      });
+
+      it('should not catch JSONArray', () => {
+        const errors = validator.validate('JSONArray');
+        expect(errors).toHaveLength(0);
+      });
+
+      it('should not catch JSONBoolean', () => {
+        const errors = validator.validate('JSONBoolean');
+        expect(errors).toHaveLength(0);
+      });
+
+      it('should not catch JSONNull', () => {
+        const errors = validator.validate('JSONNull');
+        expect(errors).toHaveLength(0);
+      });
+
+      it('should not catch JSONRaw', () => {
+        const errors = validator.validate('JSONRaw');
+        expect(errors).toHaveLength(0);
+      });
     });
   });
 });

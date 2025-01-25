@@ -1,5 +1,17 @@
 import { FunctionDefinition } from '../types';
 
+export const JSON_CONSTANTS = {
+  JSONString: 1,
+  JSONNumber: 2,
+  JSONObject: 3,
+  JSONArray: 4,
+  JSONBoolean: 5,
+  JSONNull: 6,
+  JSONRaw: 0,
+} as const;
+
+export type JsonConstant = keyof typeof JSON_CONSTANTS;
+
 export const JsonFunctions: FunctionDefinition[] = [
   {
     name: 'JSONDeleteElement',

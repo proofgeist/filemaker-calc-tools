@@ -22,6 +22,7 @@ import { OrExprContext } from "./FileMakerCalcParser";
 import { NumberLiteralContext } from "./FileMakerCalcParser";
 import { StringLiteralContext } from "./FileMakerCalcParser";
 import { BooleanLiteralContext } from "./FileMakerCalcParser";
+import { JsonConstantLiteralContext } from "./FileMakerCalcParser";
 import { CalculationContext } from "./FileMakerCalcParser";
 import { ExpressionContext } from "./FileMakerCalcParser";
 import { LetFunctionContext } from "./FileMakerCalcParser";
@@ -283,6 +284,19 @@ export interface FileMakerCalcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitBooleanLiteral?: (ctx: BooleanLiteralContext) => void;
+
+	/**
+	 * Enter a parse tree produced by the `JsonConstantLiteral`
+	 * labeled alternative in `FileMakerCalcParser.literal`.
+	 * @param ctx the parse tree
+	 */
+	enterJsonConstantLiteral?: (ctx: JsonConstantLiteralContext) => void;
+	/**
+	 * Exit a parse tree produced by the `JsonConstantLiteral`
+	 * labeled alternative in `FileMakerCalcParser.literal`.
+	 * @param ctx the parse tree
+	 */
+	exitJsonConstantLiteral?: (ctx: JsonConstantLiteralContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `FileMakerCalcParser.calculation`.

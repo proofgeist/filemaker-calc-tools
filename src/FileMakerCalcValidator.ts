@@ -14,6 +14,7 @@ import {
   VariableDeclarationContext,
 } from './generated/FileMakerCalcParser';
 import { GET_CONSTANTS } from './functions/categories/GetFunctions';
+import { JSON_CONSTANTS } from './functions/categories/JsonFunctions';
 
 class ScopeValidator extends AbstractParseTreeVisitor<void> implements FileMakerCalcVisitor<void> {
   private currentLetScope: Set<string> = new Set();
@@ -43,6 +44,11 @@ class ScopeValidator extends AbstractParseTreeVisitor<void> implements FileMaker
 
   visitVariableExpr(ctx: VariableExprContext): void {
     const varName = ctx.IDENTIFIER().text;
+
+    // Check if it's a JSON constant
+    if (varName in JSON_CONSTANTS) {
+      return;
+    }
 
     // Check if we're inside a function call
     if (ctx.parent instanceof FunctionCallContext) {
