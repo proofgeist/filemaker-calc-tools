@@ -115,7 +115,15 @@ pnpm run test:coverage
 
 ## Publishing New Versions
 
-To publish a new version:
+Follow these steps exactly to ensure a successful release:
+
+### Pre-release Checklist
+
+- [ ] All changes are committed and pushed to `main`
+- [ ] All tests are passing (`pnpm test`)
+- [ ] The build is successful (`pnpm run build`)
+
+### Release Steps
 
 1. Update version in `package.json`:
 
@@ -125,21 +133,50 @@ To publish a new version:
    }
    ```
 
-2. Commit the changes:
+2. Commit the version change:
 
    ```bash
    git add package.json
-   git commit -m "fix: description of changes"
+   git commit -m "chore: bump version to x.y.z"
+   git push origin main
    ```
 
-3. Create and push a new tag:
+3. Create and push a tag:
 
    ```bash
    git tag -a vx.y.z -m "Version x.y.z"
-   git push origin main --tags
+   git push origin vx.y.z
    ```
 
-4. The GitHub Action will automatically publish to GitHub Packages
+4. Create a GitHub Release:
+
+   ```bash
+   gh release create vx.y.z --title "Version x.y.z" --notes "Release notes here"
+   ```
+
+   Alternatively, create the release through the GitHub web interface:
+
+   - Go to Releases
+   - Click "Create a new release"
+   - Choose the tag
+   - Add release notes
+   - Click "Publish release"
+
+5. Verify Release:
+   - [ ] Check GitHub Actions to confirm the publish workflow has started
+   - [ ] Wait for workflow completion
+   - [ ] Verify the new version appears in GitHub Packages
+
+Note: The GitHub Action will only trigger when a Release is created, not just when a tag is pushed.
+If the workflow doesn't trigger, check that you created a GitHub Release and not just a tag.
+
+### Version Numbering
+
+Follow semantic versioning:
+
+- Major (x.0.0): Breaking changes
+- Minor (0.x.0): New features (backwards compatible)
+- Patch (0.0.x): Bug fixes and minor changes
 
 ## License
 

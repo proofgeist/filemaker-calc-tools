@@ -1,0 +1,82 @@
+---
+description:
+globs:
+---
+
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+
+# Release Process Rule
+
+This rule ensures the correct process is followed when creating a new release.
+
+## Pre-release Requirements
+
+1. All changes must be committed and pushed to `main`
+2. Tests must pass: Run `pnpm test`
+3. Build must succeed: Run `pnpm run build`
+
+## Release Steps
+
+### 1. Version Update
+- Update version in `package.json`
+- Use semantic versioning:
+  - Major (x.0.0): Breaking changes
+  - Minor (0.x.0): New features (backwards compatible)
+  - Patch (0.0.x): Bug fixes and minor changes
+
+### 2. Commit Version Change
+```bash
+git add package.json
+git commit -m "chore: bump version to x.y.z"
+git push origin main
+```
+
+### 3. Create and Push Tag
+```bash
+git tag -a vx.y.z -m "Version x.y.z"
+git push origin vx.y.z
+```
+
+### 4. Create GitHub Release
+Either use GitHub CLI:
+```bash
+gh release create vx.y.z --title "Version x.y.z" --notes "Release notes here"
+```
+
+Or create through GitHub web interface:
+1. Go to Releases
+2. Click "Create a new release"
+3. Choose the tag
+4. Add release notes
+5. Click "Publish release"
+
+### 5. Verify Release
+- Check GitHub Actions for publish workflow
+- Confirm workflow completion
+- Verify package appears in GitHub Packages
+
+## Common Mistakes to Avoid
+
+1. ❌ Creating only a tag without a GitHub Release
+   - The publish workflow only triggers on Release creation
+   - Tags alone will not trigger the workflow
+
+2. ❌ Incorrect version format
+   - Always prefix tags with 'v' (e.g., v1.0.0)
+   - Keep package.json version in sync
+
+3. ❌ Skipping verification
+   - Always check workflow completion
+   - Verify package is published
+
+## Validation Checklist
+
+- [ ] Version updated in package.json
+- [ ] Changes committed and pushed
+- [ ] Tag created with 'v' prefix
+- [ ] GitHub Release created from tag
+- [ ] Publish workflow completed successfully
+- [ ] New version available in GitHub Packages
