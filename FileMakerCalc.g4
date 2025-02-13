@@ -38,7 +38,7 @@ functionCall
     ;
 
 argumentList
-    : (expression | arrayNotation) (';' (expression | arrayNotation))*
+    : (expression | arrayNotation) ((',' | ';') (expression | arrayNotation))*
     ;
 
 arrayNotation

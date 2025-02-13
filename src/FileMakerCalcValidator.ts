@@ -45,6 +45,11 @@ class ScopeValidator extends AbstractParseTreeVisitor<void> implements FileMaker
   visitVariableExpr(ctx: VariableExprContext): void {
     const varName = ctx.IDENTIFIER().text;
 
+    // Check if it's a numeric literal
+    if (/^[0-9]+$/.test(varName)) {
+      return;
+    }
+
     // Check if it's a JSON constant
     if (varName in JSON_CONSTANTS) {
       return;

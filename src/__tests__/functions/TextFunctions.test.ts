@@ -86,7 +86,7 @@ describe('Text Functions', () => {
 
   // Three argument functions
   describe('three argument functions', () => {
-    const threeArgFuncs = ['Middle', 'MiddleValues', 'MiddleWords', 'Replace', 'Substitute'];
+    const threeArgFuncs = ['Middle', 'MiddleValues', 'MiddleWords', 'Replace'];
 
     threeArgFuncs.forEach((func) => {
       describe(`${func}()`, () => {
@@ -105,6 +105,34 @@ describe('Text Functions', () => {
           expect(errors.length).toBeGreaterThan(0);
         });
       });
+    });
+  });
+
+  // Special case: Substitute function with variable arguments
+  describe('Substitute()', () => {
+    it('should validate with 3 arguments (basic form)', () => {
+      const errors = validator.validate('Substitute("test", "t", "x")');
+      expect(errors).toHaveLength(0);
+    });
+
+    it('should validate with array notation for search/replace pairs', () => {
+      const errors = validator.validate('Substitute("test", ["t"; "x"])');
+      expect(errors).toHaveLength(0);
+    });
+
+    it('should validate with multiple array pairs', () => {
+      const errors = validator.validate('Substitute("test", ["t"; "x"], ["s"; "y"])');
+      expect(errors).toHaveLength(0);
+    });
+
+    it('should error with too few arguments', () => {
+      const errors = validator.validate('Substitute("test")');
+      expect(errors.length).toBeGreaterThan(0);
+    });
+
+    it('should error with incomplete array pair', () => {
+      const errors = validator.validate('Substitute("test", ["t"])');
+      expect(errors.length).toBeGreaterThan(0);
     });
   });
 

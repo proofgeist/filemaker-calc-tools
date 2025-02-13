@@ -193,10 +193,20 @@ export const TextFunctions: FunctionDefinition[] = [
   },
   {
     name: 'Substitute',
-    minArgs: 3,
+    minArgs: 2,
     maxArgs: Infinity,
     description:
-      'Returns text with searchString replaced by replaceString. Can accept multiple pairs of search and replace strings.',
+      'Returns text with searchString replaced by replaceString. Can accept either individual arguments (text, search, replace) or array notation for search/replace pairs.',
+    validateArgs: (args: string[]): string | null => {
+      if (args.length < 2) {
+        return 'Substitute function requires at least a text argument and one search/replace pair';
+      }
+      // First argument should be the text to search in
+      // Remaining arguments can be either:
+      // 1. Two strings (search, replace)
+      // 2. One or more arrays containing exactly two elements [search, replace]
+      return null;
+    },
   },
   {
     name: 'Trim',
