@@ -40,8 +40,22 @@ describe('JSON Functions', () => {
       expect(errors).toHaveLength(0);
     });
 
+    it('should validate with three arguments', () => {
+      const errors = validator.validate(
+        'JSONSetElement ( ""; ["xml"; $xml; JSONString]; ["type"; $type; JSONString] )'
+      );
+      expect(errors).toHaveLength(0);
+    });
+    it('should validate with three 4', () => {
+      const errors = validator.validate(
+        'JSONSetElement ( ""; ["xml"; $xml; JSONString]; ["type"; $type; JSONString]; ["a"; "a"; JSONString] )'
+      );
+      expect(errors).toHaveLength(0);
+    });
+
     it('should error with no arguments', () => {
       const errors = validator.validate('JSONFormatElements()');
+      console.log(errors);
       expect(errors.length).toBeGreaterThan(0);
     });
 
