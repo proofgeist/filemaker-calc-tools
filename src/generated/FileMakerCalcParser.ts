@@ -45,45 +45,44 @@ export class FileMakerCalcParser extends Parser {
 	public static readonly T__14 = 15;
 	public static readonly T__15 = 16;
 	public static readonly T__16 = 17;
-	public static readonly T__17 = 18;
-	public static readonly AND = 19;
-	public static readonly OR = 20;
-	public static readonly NOT = 21;
-	public static readonly LET = 22;
-	public static readonly BOOLEAN = 23;
-	public static readonly NUMBER = 24;
-	public static readonly STRING = 25;
-	public static readonly GLOBAL_VAR = 26;
-	public static readonly LOCAL_VAR = 27;
-	public static readonly IDENTIFIER = 28;
-	public static readonly BLOCK_COMMENT = 29;
-	public static readonly LINE_COMMENT = 30;
-	public static readonly WS = 31;
-	public static readonly JSON_CONSTANT = 32;
+	public static readonly AND = 18;
+	public static readonly OR = 19;
+	public static readonly NOT = 20;
+	public static readonly LET = 21;
+	public static readonly BOOLEAN = 22;
+	public static readonly NUMBER = 23;
+	public static readonly STRING = 24;
+	public static readonly GLOBAL_VAR = 25;
+	public static readonly LOCAL_VAR = 26;
+	public static readonly IDENTIFIER = 27;
+	public static readonly BLOCK_COMMENT = 28;
+	public static readonly LINE_COMMENT = 29;
+	public static readonly WS = 30;
+	public static readonly JSON_CONSTANT = 31;
 	public static readonly RULE_calculation = 0;
 	public static readonly RULE_expression = 1;
 	public static readonly RULE_letFunction = 2;
 	public static readonly RULE_variableDeclaration = 3;
 	public static readonly RULE_functionCall = 4;
 	public static readonly RULE_argumentList = 5;
-	public static readonly RULE_fieldReference = 6;
-	public static readonly RULE_literal = 7;
+	public static readonly RULE_arrayNotation = 6;
+	public static readonly RULE_fieldReference = 7;
+	public static readonly RULE_literal = 8;
 	// tslint:disable:no-trailing-whitespace
 	public static readonly ruleNames: string[] = [
 		"calculation", "expression", "letFunction", "variableDeclaration", "functionCall", 
-		"argumentList", "fieldReference", "literal",
+		"argumentList", "arrayNotation", "fieldReference", "literal",
 	];
 
 	private static readonly _LITERAL_NAMES: Array<string | undefined> = [
-		undefined, "'('", "')'", "'['", "']'", "'*'", "'/'", "'+'", "'-'", "'&'", 
-		"'='", "'\u2260'", "'<'", "'>'", "'\u2264'", "'\u2265'", "';'", "','", 
-		"'::'",
+		undefined, "'('", "')'", "'['", "']'", "';'", "'*'", "'/'", "'+'", "'-'", 
+		"'&'", "'='", "'\u2260'", "'<'", "'>'", "'\u2264'", "'\u2265'", "'::'",
 	];
 	private static readonly _SYMBOLIC_NAMES: Array<string | undefined> = [
 		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
 		undefined, undefined, undefined, undefined, undefined, undefined, undefined, 
-		undefined, undefined, undefined, undefined, undefined, "AND", "OR", "NOT", 
-		"LET", "BOOLEAN", "NUMBER", "STRING", "GLOBAL_VAR", "LOCAL_VAR", "IDENTIFIER", 
+		undefined, undefined, undefined, undefined, "AND", "OR", "NOT", "LET", 
+		"BOOLEAN", "NUMBER", "STRING", "GLOBAL_VAR", "LOCAL_VAR", "IDENTIFIER", 
 		"BLOCK_COMMENT", "LINE_COMMENT", "WS", "JSON_CONSTANT",
 	];
 	public static readonly VOCABULARY: Vocabulary = new VocabularyImpl(FileMakerCalcParser._LITERAL_NAMES, FileMakerCalcParser._SYMBOLIC_NAMES, []);
@@ -119,9 +118,9 @@ export class FileMakerCalcParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 16;
+			this.state = 18;
 			this.expression(0);
-			this.state = 17;
+			this.state = 19;
 			this.match(FileMakerCalcParser.EOF);
 			}
 		}
@@ -159,16 +158,16 @@ export class FileMakerCalcParser extends Parser {
 			let _alt: number;
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 33;
+			this.state = 45;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input, 0, this._ctx) ) {
+			switch ( this.interpreter.adaptivePredict(this._input, 1, this._ctx) ) {
 			case 1:
 				{
 				_localctx = new LiteralExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
 
-				this.state = 20;
+				this.state = 22;
 				this.literal();
 				}
 				break;
@@ -178,7 +177,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new FieldExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 21;
+				this.state = 23;
 				this.fieldReference();
 				}
 				break;
@@ -188,7 +187,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new LetExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 22;
+				this.state = 24;
 				this.letFunction();
 				}
 				break;
@@ -198,7 +197,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new FunctionExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 23;
+				this.state = 25;
 				this.functionCall();
 				}
 				break;
@@ -208,7 +207,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new GlobalVarExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 24;
+				this.state = 26;
 				this.match(FileMakerCalcParser.GLOBAL_VAR);
 				}
 				break;
@@ -218,7 +217,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new LocalVarExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 25;
+				this.state = 27;
 				this.match(FileMakerCalcParser.LOCAL_VAR);
 				}
 				break;
@@ -228,7 +227,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new VariableExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 26;
+				this.state = 28;
 				this.match(FileMakerCalcParser.IDENTIFIER);
 				}
 				break;
@@ -238,31 +237,61 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new ParenExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 27;
-				this.match(FileMakerCalcParser.T__0);
-				this.state = 28;
-				this.expression(0);
 				this.state = 29;
+				this.match(FileMakerCalcParser.T__0);
+				this.state = 30;
+				this.expression(0);
+				this.state = 31;
 				this.match(FileMakerCalcParser.T__1);
 				}
 				break;
 
 			case 9:
 				{
+				_localctx = new ArrayNotationExprContext(_localctx);
+				this._ctx = _localctx;
+				_prevctx = _localctx;
+				this.state = 33;
+				this.match(FileMakerCalcParser.T__2);
+				this.state = 34;
+				this.expression(0);
+				this.state = 37;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+				do {
+					{
+					{
+					this.state = 35;
+					this.match(FileMakerCalcParser.T__4);
+					this.state = 36;
+					this.expression(0);
+					}
+					}
+					this.state = 39;
+					this._errHandler.sync(this);
+					_la = this._input.LA(1);
+				} while (_la === FileMakerCalcParser.T__4);
+				this.state = 41;
+				this.match(FileMakerCalcParser.T__3);
+				}
+				break;
+
+			case 10:
+				{
 				_localctx = new NotExprContext(_localctx);
 				this._ctx = _localctx;
 				_prevctx = _localctx;
-				this.state = 31;
+				this.state = 43;
 				this.match(FileMakerCalcParser.NOT);
-				this.state = 32;
+				this.state = 44;
 				this.expression(3);
 				}
 				break;
 			}
 			this._ctx._stop = this._input.tryLT(-1);
-			this.state = 60;
+			this.state = 72;
 			this._errHandler.sync(this);
-			_alt = this.interpreter.adaptivePredict(this._input, 2, this._ctx);
+			_alt = this.interpreter.adaptivePredict(this._input, 3, this._ctx);
 			while (_alt !== 2 && _alt !== ATN.INVALID_ALT_NUMBER) {
 				if (_alt === 1) {
 					if (this._parseListeners != null) {
@@ -270,21 +299,21 @@ export class FileMakerCalcParser extends Parser {
 					}
 					_prevctx = _localctx;
 					{
-					this.state = 58;
+					this.state = 70;
 					this._errHandler.sync(this);
-					switch ( this.interpreter.adaptivePredict(this._input, 1, this._ctx) ) {
+					switch ( this.interpreter.adaptivePredict(this._input, 2, this._ctx) ) {
 					case 1:
 						{
 						_localctx = new MultiplicativeExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 35;
+						this.state = 47;
 						if (!(this.precpred(this._ctx, 7))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 7)");
 						}
-						this.state = 36;
+						this.state = 48;
 						(_localctx as MultiplicativeExprContext)._op = this._input.LT(1);
 						_la = this._input.LA(1);
-						if (!(_la === FileMakerCalcParser.T__4 || _la === FileMakerCalcParser.T__5)) {
+						if (!(_la === FileMakerCalcParser.T__5 || _la === FileMakerCalcParser.T__6)) {
 							(_localctx as MultiplicativeExprContext)._op = this._errHandler.recoverInline(this);
 						} else {
 							if (this._input.LA(1) === Token.EOF) {
@@ -294,7 +323,7 @@ export class FileMakerCalcParser extends Parser {
 							this._errHandler.reportMatch(this);
 							this.consume();
 						}
-						this.state = 37;
+						this.state = 49;
 						this.expression(8);
 						}
 						break;
@@ -303,14 +332,14 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new AdditiveExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 38;
+						this.state = 50;
 						if (!(this.precpred(this._ctx, 6))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 6)");
 						}
-						this.state = 39;
+						this.state = 51;
 						(_localctx as AdditiveExprContext)._op = this._input.LT(1);
 						_la = this._input.LA(1);
-						if (!(_la === FileMakerCalcParser.T__6 || _la === FileMakerCalcParser.T__7)) {
+						if (!(_la === FileMakerCalcParser.T__7 || _la === FileMakerCalcParser.T__8)) {
 							(_localctx as AdditiveExprContext)._op = this._errHandler.recoverInline(this);
 						} else {
 							if (this._input.LA(1) === Token.EOF) {
@@ -320,7 +349,7 @@ export class FileMakerCalcParser extends Parser {
 							this._errHandler.reportMatch(this);
 							this.consume();
 						}
-						this.state = 40;
+						this.state = 52;
 						this.expression(7);
 						}
 						break;
@@ -329,13 +358,13 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new ConcatenationExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 41;
+						this.state = 53;
 						if (!(this.precpred(this._ctx, 5))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 5)");
 						}
-						this.state = 42;
-						this.match(FileMakerCalcParser.T__8);
-						this.state = 43;
+						this.state = 54;
+						this.match(FileMakerCalcParser.T__9);
+						this.state = 55;
 						this.expression(6);
 						}
 						break;
@@ -344,14 +373,14 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new ComparisonExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 44;
+						this.state = 56;
 						if (!(this.precpred(this._ctx, 4))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 4)");
 						}
-						this.state = 45;
+						this.state = 57;
 						(_localctx as ComparisonExprContext)._op = this._input.LT(1);
 						_la = this._input.LA(1);
-						if (!((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << FileMakerCalcParser.T__9) | (1 << FileMakerCalcParser.T__10) | (1 << FileMakerCalcParser.T__11) | (1 << FileMakerCalcParser.T__12) | (1 << FileMakerCalcParser.T__13) | (1 << FileMakerCalcParser.T__14))) !== 0))) {
+						if (!((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << FileMakerCalcParser.T__10) | (1 << FileMakerCalcParser.T__11) | (1 << FileMakerCalcParser.T__12) | (1 << FileMakerCalcParser.T__13) | (1 << FileMakerCalcParser.T__14) | (1 << FileMakerCalcParser.T__15))) !== 0))) {
 							(_localctx as ComparisonExprContext)._op = this._errHandler.recoverInline(this);
 						} else {
 							if (this._input.LA(1) === Token.EOF) {
@@ -361,7 +390,7 @@ export class FileMakerCalcParser extends Parser {
 							this._errHandler.reportMatch(this);
 							this.consume();
 						}
-						this.state = 46;
+						this.state = 58;
 						this.expression(5);
 						}
 						break;
@@ -370,13 +399,13 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new AndExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 47;
+						this.state = 59;
 						if (!(this.precpred(this._ctx, 2))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 2)");
 						}
-						this.state = 48;
+						this.state = 60;
 						this.match(FileMakerCalcParser.AND);
-						this.state = 49;
+						this.state = 61;
 						this.expression(3);
 						}
 						break;
@@ -385,13 +414,13 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new OrExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 50;
+						this.state = 62;
 						if (!(this.precpred(this._ctx, 1))) {
 							throw this.createFailedPredicateException("this.precpred(this._ctx, 1)");
 						}
-						this.state = 51;
+						this.state = 63;
 						this.match(FileMakerCalcParser.OR);
-						this.state = 52;
+						this.state = 64;
 						this.expression(2);
 						}
 						break;
@@ -400,24 +429,24 @@ export class FileMakerCalcParser extends Parser {
 						{
 						_localctx = new RepetitionExprContext(new ExpressionContext(_parentctx, _parentState));
 						this.pushNewRecursionContext(_localctx, _startState, FileMakerCalcParser.RULE_expression);
-						this.state = 53;
-						if (!(this.precpred(this._ctx, 8))) {
-							throw this.createFailedPredicateException("this.precpred(this._ctx, 8)");
+						this.state = 65;
+						if (!(this.precpred(this._ctx, 9))) {
+							throw this.createFailedPredicateException("this.precpred(this._ctx, 9)");
 						}
-						this.state = 54;
+						this.state = 66;
 						this.match(FileMakerCalcParser.T__2);
-						this.state = 55;
+						this.state = 67;
 						this.expression(0);
-						this.state = 56;
+						this.state = 68;
 						this.match(FileMakerCalcParser.T__3);
 						}
 						break;
 					}
 					}
 				}
-				this.state = 62;
+				this.state = 74;
 				this._errHandler.sync(this);
-				_alt = this.interpreter.adaptivePredict(this._input, 2, this._ctx);
+				_alt = this.interpreter.adaptivePredict(this._input, 3, this._ctx);
 			}
 			}
 		}
@@ -443,33 +472,33 @@ export class FileMakerCalcParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 63;
+			this.state = 75;
 			this.match(FileMakerCalcParser.LET);
-			this.state = 64;
+			this.state = 76;
 			this.match(FileMakerCalcParser.T__0);
-			this.state = 65;
+			this.state = 77;
 			this.match(FileMakerCalcParser.T__2);
-			this.state = 67;
+			this.state = 79;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
 			do {
 				{
 				{
-				this.state = 66;
+				this.state = 78;
 				this.variableDeclaration();
 				}
 				}
-				this.state = 69;
+				this.state = 81;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			} while (_la === FileMakerCalcParser.IDENTIFIER);
-			this.state = 71;
+			this.state = 83;
 			this.match(FileMakerCalcParser.T__3);
-			this.state = 72;
-			this.match(FileMakerCalcParser.T__15);
-			this.state = 73;
+			this.state = 84;
+			this.match(FileMakerCalcParser.T__4);
+			this.state = 85;
 			this.expression(0);
-			this.state = 74;
+			this.state = 86;
 			this.match(FileMakerCalcParser.T__1);
 			}
 		}
@@ -495,19 +524,19 @@ export class FileMakerCalcParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 76;
+			this.state = 88;
 			this.match(FileMakerCalcParser.IDENTIFIER);
-			this.state = 77;
-			this.match(FileMakerCalcParser.T__9);
-			this.state = 78;
+			this.state = 89;
+			this.match(FileMakerCalcParser.T__10);
+			this.state = 90;
 			this.expression(0);
-			this.state = 80;
+			this.state = 92;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (_la === FileMakerCalcParser.T__15) {
+			if (_la === FileMakerCalcParser.T__4) {
 				{
-				this.state = 79;
-				this.match(FileMakerCalcParser.T__15);
+				this.state = 91;
+				this.match(FileMakerCalcParser.T__4);
 				}
 			}
 
@@ -535,21 +564,21 @@ export class FileMakerCalcParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 82;
+			this.state = 94;
 			this.match(FileMakerCalcParser.IDENTIFIER);
-			this.state = 83;
+			this.state = 95;
 			this.match(FileMakerCalcParser.T__0);
-			this.state = 85;
+			this.state = 97;
 			this._errHandler.sync(this);
 			_la = this._input.LA(1);
-			if (((((_la - 1)) & ~0x1F) === 0 && ((1 << (_la - 1)) & ((1 << (FileMakerCalcParser.T__0 - 1)) | (1 << (FileMakerCalcParser.NOT - 1)) | (1 << (FileMakerCalcParser.LET - 1)) | (1 << (FileMakerCalcParser.BOOLEAN - 1)) | (1 << (FileMakerCalcParser.NUMBER - 1)) | (1 << (FileMakerCalcParser.STRING - 1)) | (1 << (FileMakerCalcParser.GLOBAL_VAR - 1)) | (1 << (FileMakerCalcParser.LOCAL_VAR - 1)) | (1 << (FileMakerCalcParser.IDENTIFIER - 1)) | (1 << (FileMakerCalcParser.JSON_CONSTANT - 1)))) !== 0)) {
+			if ((((_la) & ~0x1F) === 0 && ((1 << _la) & ((1 << FileMakerCalcParser.T__0) | (1 << FileMakerCalcParser.T__2) | (1 << FileMakerCalcParser.NOT) | (1 << FileMakerCalcParser.LET) | (1 << FileMakerCalcParser.BOOLEAN) | (1 << FileMakerCalcParser.NUMBER) | (1 << FileMakerCalcParser.STRING) | (1 << FileMakerCalcParser.GLOBAL_VAR) | (1 << FileMakerCalcParser.LOCAL_VAR) | (1 << FileMakerCalcParser.IDENTIFIER) | (1 << FileMakerCalcParser.JSON_CONSTANT))) !== 0)) {
 				{
-				this.state = 84;
+				this.state = 96;
 				this.argumentList();
 				}
 			}
 
-			this.state = 87;
+			this.state = 99;
 			this.match(FileMakerCalcParser.T__1);
 			}
 		}
@@ -575,31 +604,51 @@ export class FileMakerCalcParser extends Parser {
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 89;
-			this.expression(0);
-			this.state = 94;
+			this.state = 103;
 			this._errHandler.sync(this);
-			_la = this._input.LA(1);
-			while (_la === FileMakerCalcParser.T__15 || _la === FileMakerCalcParser.T__16) {
+			switch ( this.interpreter.adaptivePredict(this._input, 7, this._ctx) ) {
+			case 1:
 				{
-				{
-				this.state = 90;
-				_la = this._input.LA(1);
-				if (!(_la === FileMakerCalcParser.T__15 || _la === FileMakerCalcParser.T__16)) {
-				this._errHandler.recoverInline(this);
-				} else {
-					if (this._input.LA(1) === Token.EOF) {
-						this.matchedEOF = true;
-					}
-
-					this._errHandler.reportMatch(this);
-					this.consume();
-				}
-				this.state = 91;
+				this.state = 101;
 				this.expression(0);
 				}
+				break;
+
+			case 2:
+				{
+				this.state = 102;
+				this.arrayNotation();
 				}
-				this.state = 96;
+				break;
+			}
+			this.state = 112;
+			this._errHandler.sync(this);
+			_la = this._input.LA(1);
+			while (_la === FileMakerCalcParser.T__4) {
+				{
+				{
+				this.state = 105;
+				this.match(FileMakerCalcParser.T__4);
+				this.state = 108;
+				this._errHandler.sync(this);
+				switch ( this.interpreter.adaptivePredict(this._input, 8, this._ctx) ) {
+				case 1:
+					{
+					this.state = 106;
+					this.expression(0);
+					}
+					break;
+
+				case 2:
+					{
+					this.state = 107;
+					this.arrayNotation();
+					}
+					break;
+				}
+				}
+				}
+				this.state = 114;
 				this._errHandler.sync(this);
 				_la = this._input.LA(1);
 			}
@@ -620,28 +669,74 @@ export class FileMakerCalcParser extends Parser {
 		return _localctx;
 	}
 	// @RuleVersion(0)
-	public fieldReference(): FieldReferenceContext {
-		let _localctx: FieldReferenceContext = new FieldReferenceContext(this._ctx, this.state);
-		this.enterRule(_localctx, 12, FileMakerCalcParser.RULE_fieldReference);
+	public arrayNotation(): ArrayNotationContext {
+		let _localctx: ArrayNotationContext = new ArrayNotationContext(this._ctx, this.state);
+		this.enterRule(_localctx, 12, FileMakerCalcParser.RULE_arrayNotation);
+		let _la: number;
 		try {
 			this.enterOuterAlt(_localctx, 1);
 			{
-			this.state = 97;
-			this.match(FileMakerCalcParser.IDENTIFIER);
-			this.state = 98;
-			this.match(FileMakerCalcParser.T__17);
-			this.state = 99;
-			this.match(FileMakerCalcParser.IDENTIFIER);
-			this.state = 104;
+			this.state = 115;
+			this.match(FileMakerCalcParser.T__2);
+			this.state = 116;
+			this.expression(0);
+			this.state = 119;
 			this._errHandler.sync(this);
-			switch ( this.interpreter.adaptivePredict(this._input, 7, this._ctx) ) {
+			_la = this._input.LA(1);
+			do {
+				{
+				{
+				this.state = 117;
+				this.match(FileMakerCalcParser.T__4);
+				this.state = 118;
+				this.expression(0);
+				}
+				}
+				this.state = 121;
+				this._errHandler.sync(this);
+				_la = this._input.LA(1);
+			} while (_la === FileMakerCalcParser.T__4);
+			this.state = 123;
+			this.match(FileMakerCalcParser.T__3);
+			}
+		}
+		catch (re) {
+			if (re instanceof RecognitionException) {
+				_localctx.exception = re;
+				this._errHandler.reportError(this, re);
+				this._errHandler.recover(this, re);
+			} else {
+				throw re;
+			}
+		}
+		finally {
+			this.exitRule();
+		}
+		return _localctx;
+	}
+	// @RuleVersion(0)
+	public fieldReference(): FieldReferenceContext {
+		let _localctx: FieldReferenceContext = new FieldReferenceContext(this._ctx, this.state);
+		this.enterRule(_localctx, 14, FileMakerCalcParser.RULE_fieldReference);
+		try {
+			this.enterOuterAlt(_localctx, 1);
+			{
+			this.state = 125;
+			this.match(FileMakerCalcParser.IDENTIFIER);
+			this.state = 126;
+			this.match(FileMakerCalcParser.T__16);
+			this.state = 127;
+			this.match(FileMakerCalcParser.IDENTIFIER);
+			this.state = 132;
+			this._errHandler.sync(this);
+			switch ( this.interpreter.adaptivePredict(this._input, 11, this._ctx) ) {
 			case 1:
 				{
-				this.state = 100;
+				this.state = 128;
 				this.match(FileMakerCalcParser.T__2);
-				this.state = 101;
+				this.state = 129;
 				this.expression(0);
-				this.state = 102;
+				this.state = 130;
 				this.match(FileMakerCalcParser.T__3);
 				}
 				break;
@@ -665,16 +760,16 @@ export class FileMakerCalcParser extends Parser {
 	// @RuleVersion(0)
 	public literal(): LiteralContext {
 		let _localctx: LiteralContext = new LiteralContext(this._ctx, this.state);
-		this.enterRule(_localctx, 14, FileMakerCalcParser.RULE_literal);
+		this.enterRule(_localctx, 16, FileMakerCalcParser.RULE_literal);
 		try {
-			this.state = 110;
+			this.state = 138;
 			this._errHandler.sync(this);
 			switch (this._input.LA(1)) {
 			case FileMakerCalcParser.NUMBER:
 				_localctx = new NumberLiteralContext(_localctx);
 				this.enterOuterAlt(_localctx, 1);
 				{
-				this.state = 106;
+				this.state = 134;
 				this.match(FileMakerCalcParser.NUMBER);
 				}
 				break;
@@ -682,7 +777,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new StringLiteralContext(_localctx);
 				this.enterOuterAlt(_localctx, 2);
 				{
-				this.state = 107;
+				this.state = 135;
 				this.match(FileMakerCalcParser.STRING);
 				}
 				break;
@@ -690,7 +785,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new BooleanLiteralContext(_localctx);
 				this.enterOuterAlt(_localctx, 3);
 				{
-				this.state = 108;
+				this.state = 136;
 				this.match(FileMakerCalcParser.BOOLEAN);
 				}
 				break;
@@ -698,7 +793,7 @@ export class FileMakerCalcParser extends Parser {
 				_localctx = new JsonConstantLiteralContext(_localctx);
 				this.enterOuterAlt(_localctx, 4);
 				{
-				this.state = 109;
+				this.state = 137;
 				this.match(FileMakerCalcParser.JSON_CONSTANT);
 				}
 				break;
@@ -749,61 +844,73 @@ export class FileMakerCalcParser extends Parser {
 			return this.precpred(this._ctx, 1);
 
 		case 6:
-			return this.precpred(this._ctx, 8);
+			return this.precpred(this._ctx, 9);
 		}
 		return true;
 	}
 
 	public static readonly _serializedATN: string =
-		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03\"s\x04\x02\t" +
-		"\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07\t" +
-		"\x07\x04\b\t\b\x04\t\t\t\x03\x02\x03\x02\x03\x02\x03\x03\x03\x03\x03\x03" +
+		"\x03\uC91D\uCABA\u058D\uAFBA\u4F53\u0607\uEA8B\uC241\x03!\x8F\x04\x02" +
+		"\t\x02\x04\x03\t\x03\x04\x04\t\x04\x04\x05\t\x05\x04\x06\t\x06\x04\x07" +
+		"\t\x07\x04\b\t\b\x04\t\t\t\x04\n\t\n\x03\x02\x03\x02\x03\x02\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
-		"\x03\x03\x03\x03\x05\x03$\n\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
+		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x06\x03(\n\x03\r\x03\x0E" +
+		"\x03)\x03\x03\x03\x03\x03\x03\x03\x03\x05\x030\n\x03\x03\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
 		"\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03\x03" +
-		"\x07\x03=\n\x03\f\x03\x0E\x03@\v\x03\x03\x04\x03\x04\x03\x04\x03\x04\x06" +
-		"\x04F\n\x04\r\x04\x0E\x04G\x03\x04\x03\x04\x03\x04\x03\x04\x03\x04\x03" +
-		"\x05\x03\x05\x03\x05\x03\x05\x05\x05S\n\x05\x03\x06\x03\x06\x03\x06\x05" +
-		"\x06X\n\x06\x03\x06\x03\x06\x03\x07\x03\x07\x03\x07\x07\x07_\n\x07\f\x07" +
-		"\x0E\x07b\v\x07\x03\b\x03\b\x03\b\x03\b\x03\b\x03\b\x03\b\x05\bk\n\b\x03" +
-		"\t\x03\t\x03\t\x03\t\x05\tq\n\t\x03\t\x02\x02\x03\x04\n\x02\x02\x04\x02" +
-		"\x06\x02\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x02\x06\x03\x02\x07\b\x03\x02" +
-		"\t\n\x03\x02\f\x11\x03\x02\x12\x13\x02\x81\x02\x12\x03\x02\x02\x02\x04" +
-		"#\x03\x02\x02\x02\x06A\x03\x02\x02\x02\bN\x03\x02\x02\x02\nT\x03\x02\x02" +
-		"\x02\f[\x03\x02\x02\x02\x0Ec\x03\x02\x02\x02\x10p\x03\x02\x02\x02\x12" +
-		"\x13\x05\x04\x03\x02\x13\x14\x07\x02\x02\x03\x14\x03\x03\x02\x02\x02\x15" +
-		"\x16\b\x03\x01\x02\x16$\x05\x10\t\x02\x17$\x05\x0E\b\x02\x18$\x05\x06" +
-		"\x04\x02\x19$\x05\n\x06\x02\x1A$\x07\x1C\x02\x02\x1B$\x07\x1D\x02\x02" +
-		"\x1C$\x07\x1E\x02\x02\x1D\x1E\x07\x03\x02\x02\x1E\x1F\x05\x04\x03\x02" +
-		"\x1F \x07\x04\x02\x02 $\x03\x02\x02\x02!\"\x07\x17\x02\x02\"$\x05\x04" +
-		"\x03\x05#\x15\x03\x02\x02\x02#\x17\x03\x02\x02\x02#\x18\x03\x02\x02\x02" +
-		"#\x19\x03\x02\x02\x02#\x1A\x03\x02\x02\x02#\x1B\x03\x02\x02\x02#\x1C\x03" +
-		"\x02\x02\x02#\x1D\x03\x02\x02\x02#!\x03\x02\x02\x02$>\x03\x02\x02\x02" +
-		"%&\f\t\x02\x02&\'\t\x02\x02\x02\'=\x05\x04\x03\n()\f\b\x02\x02)*\t\x03" +
-		"\x02\x02*=\x05\x04\x03\t+,\f\x07\x02\x02,-\x07\v\x02\x02-=\x05\x04\x03" +
-		"\b./\f\x06\x02\x02/0\t\x04\x02\x020=\x05\x04\x03\x0712\f\x04\x02\x022" +
-		"3\x07\x15\x02\x023=\x05\x04\x03\x0545\f\x03\x02\x0256\x07\x16\x02\x02" +
-		"6=\x05\x04\x03\x0478\f\n\x02\x0289\x07\x05\x02\x029:\x05\x04\x03\x02:" +
-		";\x07\x06\x02\x02;=\x03\x02\x02\x02<%\x03\x02\x02\x02<(\x03\x02\x02\x02" +
-		"<+\x03\x02\x02\x02<.\x03\x02\x02\x02<1\x03\x02\x02\x02<4\x03\x02\x02\x02" +
-		"<7\x03\x02\x02\x02=@\x03\x02\x02\x02><\x03\x02\x02\x02>?\x03\x02\x02\x02" +
-		"?\x05\x03\x02\x02\x02@>\x03\x02\x02\x02AB\x07\x18\x02\x02BC\x07\x03\x02" +
-		"\x02CE\x07\x05\x02\x02DF\x05\b\x05\x02ED\x03\x02\x02\x02FG\x03\x02\x02" +
-		"\x02GE\x03\x02\x02\x02GH\x03\x02\x02\x02HI\x03\x02\x02\x02IJ\x07\x06\x02" +
-		"\x02JK\x07\x12\x02\x02KL\x05\x04\x03\x02LM\x07\x04\x02\x02M\x07\x03\x02" +
-		"\x02\x02NO\x07\x1E\x02\x02OP\x07\f\x02\x02PR\x05\x04\x03\x02QS\x07\x12" +
-		"\x02\x02RQ\x03\x02\x02\x02RS\x03\x02\x02\x02S\t\x03\x02\x02\x02TU\x07" +
-		"\x1E\x02\x02UW\x07\x03\x02\x02VX\x05\f\x07\x02WV\x03\x02\x02\x02WX\x03" +
-		"\x02\x02\x02XY\x03\x02\x02\x02YZ\x07\x04\x02\x02Z\v\x03\x02\x02\x02[`" +
-		"\x05\x04\x03\x02\\]\t\x05\x02\x02]_\x05\x04\x03\x02^\\\x03\x02\x02\x02" +
-		"_b\x03\x02\x02\x02`^\x03\x02\x02\x02`a\x03\x02\x02\x02a\r\x03\x02\x02" +
-		"\x02b`\x03\x02\x02\x02cd\x07\x1E\x02\x02de\x07\x14\x02\x02ej\x07\x1E\x02" +
-		"\x02fg\x07\x05\x02\x02gh\x05\x04\x03\x02hi\x07\x06\x02\x02ik\x03\x02\x02" +
-		"\x02jf\x03\x02\x02\x02jk\x03\x02\x02\x02k\x0F\x03\x02\x02\x02lq\x07\x1A" +
-		"\x02\x02mq\x07\x1B\x02\x02nq\x07\x19\x02\x02oq\x07\"\x02\x02pl\x03\x02" +
-		"\x02\x02pm\x03\x02\x02\x02pn\x03\x02\x02\x02po\x03\x02\x02\x02q\x11\x03" +
-		"\x02\x02\x02\v#<>GRW`jp";
+		"\x03\x03\x03\x03\x03\x07\x03I\n\x03\f\x03\x0E\x03L\v\x03\x03\x04\x03\x04" +
+		"\x03\x04\x03\x04\x06\x04R\n\x04\r\x04\x0E\x04S\x03\x04\x03\x04\x03\x04" +
+		"\x03\x04\x03\x04\x03\x05\x03\x05\x03\x05\x03\x05\x05\x05_\n\x05\x03\x06" +
+		"\x03\x06\x03\x06\x05\x06d\n\x06\x03\x06\x03\x06\x03\x07\x03\x07\x05\x07" +
+		"j\n\x07\x03\x07\x03\x07\x03\x07\x05\x07o\n\x07\x07\x07q\n\x07\f\x07\x0E" +
+		"\x07t\v\x07\x03\b\x03\b\x03\b\x03\b\x06\bz\n\b\r\b\x0E\b{\x03\b\x03\b" +
+		"\x03\t\x03\t\x03\t\x03\t\x03\t\x03\t\x03\t\x05\t\x87\n\t\x03\n\x03\n\x03" +
+		"\n\x03\n\x05\n\x8D\n\n\x03\n\x02\x02\x03\x04\v\x02\x02\x04\x02\x06\x02" +
+		"\b\x02\n\x02\f\x02\x0E\x02\x10\x02\x12\x02\x02\x05\x03\x02\b\t\x03\x02" +
+		"\n\v\x03\x02\r\x12\x02\xA1\x02\x14\x03\x02\x02\x02\x04/\x03\x02\x02\x02" +
+		"\x06M\x03\x02\x02\x02\bZ\x03\x02\x02\x02\n`\x03\x02\x02\x02\fi\x03\x02" +
+		"\x02\x02\x0Eu\x03\x02\x02\x02\x10\x7F\x03\x02\x02\x02\x12\x8C\x03\x02" +
+		"\x02\x02\x14\x15\x05\x04\x03\x02\x15\x16\x07\x02\x02\x03\x16\x03\x03\x02" +
+		"\x02\x02\x17\x18\b\x03\x01\x02\x180\x05\x12\n\x02\x190\x05\x10\t\x02\x1A" +
+		"0\x05\x06\x04\x02\x1B0\x05\n\x06\x02\x1C0\x07\x1B\x02\x02\x1D0\x07\x1C" +
+		"\x02\x02\x1E0\x07\x1D\x02\x02\x1F \x07\x03\x02\x02 !\x05\x04\x03\x02!" +
+		"\"\x07\x04\x02\x02\"0\x03\x02\x02\x02#$\x07\x05\x02\x02$\'\x05\x04\x03" +
+		"\x02%&\x07\x07\x02\x02&(\x05\x04\x03\x02\'%\x03\x02\x02\x02()\x03\x02" +
+		"\x02\x02)\'\x03\x02\x02\x02)*\x03\x02\x02\x02*+\x03\x02\x02\x02+,\x07" +
+		"\x06\x02\x02,0\x03\x02\x02\x02-.\x07\x16\x02\x02.0\x05\x04\x03\x05/\x17" +
+		"\x03\x02\x02\x02/\x19\x03\x02\x02\x02/\x1A\x03\x02\x02\x02/\x1B\x03\x02" +
+		"\x02\x02/\x1C\x03\x02\x02\x02/\x1D\x03\x02\x02\x02/\x1E\x03\x02\x02\x02" +
+		"/\x1F\x03\x02\x02\x02/#\x03\x02\x02\x02/-\x03\x02\x02\x020J\x03\x02\x02" +
+		"\x0212\f\t\x02\x0223\t\x02\x02\x023I\x05\x04\x03\n45\f\b\x02\x0256\t\x03" +
+		"\x02\x026I\x05\x04\x03\t78\f\x07\x02\x0289\x07\f\x02\x029I\x05\x04\x03" +
+		"\b:;\f\x06\x02\x02;<\t\x04\x02\x02<I\x05\x04\x03\x07=>\f\x04\x02\x02>" +
+		"?\x07\x14\x02\x02?I\x05\x04\x03\x05@A\f\x03\x02\x02AB\x07\x15\x02\x02" +
+		"BI\x05\x04\x03\x04CD\f\v\x02\x02DE\x07\x05\x02\x02EF\x05\x04\x03\x02F" +
+		"G\x07\x06\x02\x02GI\x03\x02\x02\x02H1\x03\x02\x02\x02H4\x03\x02\x02\x02" +
+		"H7\x03\x02\x02\x02H:\x03\x02\x02\x02H=\x03\x02\x02\x02H@\x03\x02\x02\x02" +
+		"HC\x03\x02\x02\x02IL\x03\x02\x02\x02JH\x03\x02\x02\x02JK\x03\x02\x02\x02" +
+		"K\x05\x03\x02\x02\x02LJ\x03\x02\x02\x02MN\x07\x17\x02\x02NO\x07\x03\x02" +
+		"\x02OQ\x07\x05\x02\x02PR\x05\b\x05\x02QP\x03\x02\x02\x02RS\x03\x02\x02" +
+		"\x02SQ\x03\x02\x02\x02ST\x03\x02\x02\x02TU\x03\x02\x02\x02UV\x07\x06\x02" +
+		"\x02VW\x07\x07\x02\x02WX\x05\x04\x03\x02XY\x07\x04\x02\x02Y\x07\x03\x02" +
+		"\x02\x02Z[\x07\x1D\x02\x02[\\\x07\r\x02\x02\\^\x05\x04\x03\x02]_\x07\x07" +
+		"\x02\x02^]\x03\x02\x02\x02^_\x03\x02\x02\x02_\t\x03\x02\x02\x02`a\x07" +
+		"\x1D\x02\x02ac\x07\x03\x02\x02bd\x05\f\x07\x02cb\x03\x02\x02\x02cd\x03" +
+		"\x02\x02\x02de\x03\x02\x02\x02ef\x07\x04\x02\x02f\v\x03\x02\x02\x02gj" +
+		"\x05\x04\x03\x02hj\x05\x0E\b\x02ig\x03\x02\x02\x02ih\x03\x02\x02\x02j" +
+		"r\x03\x02\x02\x02kn\x07\x07\x02\x02lo\x05\x04\x03\x02mo\x05\x0E\b\x02" +
+		"nl\x03\x02\x02\x02nm\x03\x02\x02\x02oq\x03\x02\x02\x02pk\x03\x02\x02\x02" +
+		"qt\x03\x02\x02\x02rp\x03\x02\x02\x02rs\x03\x02\x02\x02s\r\x03\x02\x02" +
+		"\x02tr\x03\x02\x02\x02uv\x07\x05\x02\x02vy\x05\x04\x03\x02wx\x07\x07\x02" +
+		"\x02xz\x05\x04\x03\x02yw\x03\x02\x02\x02z{\x03\x02\x02\x02{y\x03\x02\x02" +
+		"\x02{|\x03\x02\x02\x02|}\x03\x02\x02\x02}~\x07\x06\x02\x02~\x0F\x03\x02" +
+		"\x02\x02\x7F\x80\x07\x1D\x02\x02\x80\x81\x07\x13\x02\x02\x81\x86\x07\x1D" +
+		"\x02\x02\x82\x83\x07\x05\x02\x02\x83\x84\x05\x04\x03\x02\x84\x85\x07\x06" +
+		"\x02\x02\x85\x87\x03\x02\x02\x02\x86\x82\x03\x02\x02\x02\x86\x87\x03\x02" +
+		"\x02\x02\x87\x11\x03\x02\x02\x02\x88\x8D\x07\x19\x02\x02\x89\x8D\x07\x1A" +
+		"\x02\x02\x8A\x8D\x07\x18\x02\x02\x8B\x8D\x07!\x02\x02\x8C\x88\x03\x02" +
+		"\x02\x02\x8C\x89\x03\x02\x02\x02\x8C\x8A\x03\x02\x02\x02\x8C\x8B\x03\x02" +
+		"\x02\x02\x8D\x13\x03\x02\x02\x02\x0F)/HJS^cinr{\x86\x8C";
 	public static __ATN: ATN;
 	public static get _ATN(): ATN {
 		if (!FileMakerCalcParser.__ATN) {
@@ -1114,6 +1221,41 @@ export class RepetitionExprContext extends ExpressionContext {
 	public accept<Result>(visitor: FileMakerCalcVisitor<Result>): Result {
 		if (visitor.visitRepetitionExpr) {
 			return visitor.visitRepetitionExpr(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+export class ArrayNotationExprContext extends ExpressionContext {
+	public expression(): ExpressionContext[];
+	public expression(i: number): ExpressionContext;
+	public expression(i?: number): ExpressionContext | ExpressionContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(ExpressionContext);
+		} else {
+			return this.getRuleContext(i, ExpressionContext);
+		}
+	}
+	constructor(ctx: ExpressionContext) {
+		super(ctx.parent, ctx.invokingState);
+		this.copyFrom(ctx);
+	}
+	// @Override
+	public enterRule(listener: FileMakerCalcListener): void {
+		if (listener.enterArrayNotationExpr) {
+			listener.enterArrayNotationExpr(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: FileMakerCalcListener): void {
+		if (listener.exitArrayNotationExpr) {
+			listener.exitArrayNotationExpr(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: FileMakerCalcVisitor<Result>): Result {
+		if (visitor.visitArrayNotationExpr) {
+			return visitor.visitArrayNotationExpr(this);
 		} else {
 			return visitor.visitChildren(this);
 		}
@@ -1484,6 +1626,15 @@ export class ArgumentListContext extends ParserRuleContext {
 			return this.getRuleContext(i, ExpressionContext);
 		}
 	}
+	public arrayNotation(): ArrayNotationContext[];
+	public arrayNotation(i: number): ArrayNotationContext;
+	public arrayNotation(i?: number): ArrayNotationContext | ArrayNotationContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(ArrayNotationContext);
+		} else {
+			return this.getRuleContext(i, ArrayNotationContext);
+		}
+	}
 	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
 		super(parent, invokingState);
 	}
@@ -1505,6 +1656,44 @@ export class ArgumentListContext extends ParserRuleContext {
 	public accept<Result>(visitor: FileMakerCalcVisitor<Result>): Result {
 		if (visitor.visitArgumentList) {
 			return visitor.visitArgumentList(this);
+		} else {
+			return visitor.visitChildren(this);
+		}
+	}
+}
+
+
+export class ArrayNotationContext extends ParserRuleContext {
+	public expression(): ExpressionContext[];
+	public expression(i: number): ExpressionContext;
+	public expression(i?: number): ExpressionContext | ExpressionContext[] {
+		if (i === undefined) {
+			return this.getRuleContexts(ExpressionContext);
+		} else {
+			return this.getRuleContext(i, ExpressionContext);
+		}
+	}
+	constructor(parent: ParserRuleContext | undefined, invokingState: number) {
+		super(parent, invokingState);
+	}
+	// @Override
+	public get ruleIndex(): number { return FileMakerCalcParser.RULE_arrayNotation; }
+	// @Override
+	public enterRule(listener: FileMakerCalcListener): void {
+		if (listener.enterArrayNotation) {
+			listener.enterArrayNotation(this);
+		}
+	}
+	// @Override
+	public exitRule(listener: FileMakerCalcListener): void {
+		if (listener.exitArrayNotation) {
+			listener.exitArrayNotation(this);
+		}
+	}
+	// @Override
+	public accept<Result>(visitor: FileMakerCalcVisitor<Result>): Result {
+		if (visitor.visitArrayNotation) {
+			return visitor.visitArrayNotation(this);
 		} else {
 			return visitor.visitChildren(this);
 		}

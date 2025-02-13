@@ -12,6 +12,7 @@ import { LocalVarExprContext } from "./FileMakerCalcParser";
 import { VariableExprContext } from "./FileMakerCalcParser";
 import { ParenExprContext } from "./FileMakerCalcParser";
 import { RepetitionExprContext } from "./FileMakerCalcParser";
+import { ArrayNotationExprContext } from "./FileMakerCalcParser";
 import { MultiplicativeExprContext } from "./FileMakerCalcParser";
 import { AdditiveExprContext } from "./FileMakerCalcParser";
 import { ConcatenationExprContext } from "./FileMakerCalcParser";
@@ -29,6 +30,7 @@ import { LetFunctionContext } from "./FileMakerCalcParser";
 import { VariableDeclarationContext } from "./FileMakerCalcParser";
 import { FunctionCallContext } from "./FileMakerCalcParser";
 import { ArgumentListContext } from "./FileMakerCalcParser";
+import { ArrayNotationContext } from "./FileMakerCalcParser";
 import { FieldReferenceContext } from "./FileMakerCalcParser";
 import { LiteralContext } from "./FileMakerCalcParser";
 
@@ -154,6 +156,19 @@ export interface FileMakerCalcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitRepetitionExpr?: (ctx: RepetitionExprContext) => void;
+
+	/**
+	 * Enter a parse tree produced by the `ArrayNotationExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	enterArrayNotationExpr?: (ctx: ArrayNotationExprContext) => void;
+	/**
+	 * Exit a parse tree produced by the `ArrayNotationExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 */
+	exitArrayNotationExpr?: (ctx: ArrayNotationExprContext) => void;
 
 	/**
 	 * Enter a parse tree produced by the `MultiplicativeExpr`
@@ -363,6 +378,17 @@ export interface FileMakerCalcListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	exitArgumentList?: (ctx: ArgumentListContext) => void;
+
+	/**
+	 * Enter a parse tree produced by `FileMakerCalcParser.arrayNotation`.
+	 * @param ctx the parse tree
+	 */
+	enterArrayNotation?: (ctx: ArrayNotationContext) => void;
+	/**
+	 * Exit a parse tree produced by `FileMakerCalcParser.arrayNotation`.
+	 * @param ctx the parse tree
+	 */
+	exitArrayNotation?: (ctx: ArrayNotationContext) => void;
 
 	/**
 	 * Enter a parse tree produced by `FileMakerCalcParser.fieldReference`.

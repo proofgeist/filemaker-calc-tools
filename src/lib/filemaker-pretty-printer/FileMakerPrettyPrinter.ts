@@ -14,6 +14,7 @@ import {
   LetFunctionContext,
   VariableDeclarationContext,
   VariableExprContext,
+  ArrayNotationExprContext,
 } from '../../generated/FileMakerCalcParser';
 import { FileMakerCalcVisitor } from '../../generated/FileMakerCalcVisitor';
 import { TerminalNode } from 'antlr4ts/tree/TerminalNode';
@@ -90,10 +91,23 @@ class FileMakerPrettyPrinter
   visitFunctionCall = (ctx: FunctionCallContext): string => {
     const functionName = ctx.IDENTIFIER().text;
     const argList = ctx.argumentList();
-    const argCount = argList ? argList.expression().length : 0;
+    const expressions = argList ? argList.expression() : [];
+    const argCount = expressions.length;
+
+    // For Substitute function, each array notation argument contains 2 actual arguments
+    let effectiveArgCount = argCount;
+    if (functionName === 'Substitute') {
+      effectiveArgCount = expressions.reduce((count, expr) => {
+        if (expr.text.startsWith('[') && expr.text.endsWith(']')) {
+          // Each array notation argument contains 2 values
+          return count + 2;
+        }
+        return count + 1;
+      }, 0);
+    }
 
     // Check if function is valid with correct number of arguments
-    const validationError = BuiltInFunctions.validateFunction(functionName, argCount);
+    const validationError = BuiltInFunctions.validateFunction(functionName, effectiveArgCount);
     if (validationError) {
       this.hasInvalidFunction = true;
       this.validationError = validationError;
@@ -104,15 +118,25 @@ class FileMakerPrettyPrinter
     }
 
     this.indent();
-    const expressions = argList.expression();
     const argStrings = expressions.map((arg: ExpressionContext) => this.visit(arg));
     const indentation = this.getIndentation();
     this.unindent();
 
-    // Format arguments with proper indentation and semicolons
+    // Special handling for JSONSetElement and Substitute to preserve array notation
+    if (functionName === 'JSONSetElement' || functionName === 'Substitute') {
+      const formattedArgs = argStrings
+        .map((arg, index) => {
+          const separator = index < argStrings.length - 1 ? ';' : '';
+          return `${indentation}${arg}${separator}`;
+        })
+        .join('\n');
+
+      return `${functionName} (\n${formattedArgs}\n${this.getIndentation()})`;
+    }
+
+    // Default formatting for other functions
     const formattedArgs = argStrings
       .map((arg, index) => {
-        // Add semicolon for all but the last argument
         const separator = index < argStrings.length - 1 ? ' ;' : '';
         return `${indentation}${arg}${separator}`;
       })
@@ -163,6 +187,12 @@ class FileMakerPrettyPrinter
 
   visitVariableExpr = (ctx: VariableExprContext): string => {
     return ctx.IDENTIFIER().text;
+  };
+
+  visitArrayNotationExpr = (ctx: ArrayNotationExprContext): string => {
+    const expressions = ctx.expression();
+    const parts = expressions.map((expr: ExpressionContext) => this.visit(expr));
+    return `[${parts.join('; ')}]`;
   };
 
   protected defaultResult(): string {

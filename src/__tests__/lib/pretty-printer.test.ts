@@ -119,4 +119,34 @@ List(fullName;secretName)
     const result = prettyPrintFileMakerCalculation(input);
     expect(result).toBe(expected);
   });
+  it('properly formats JSONSetElement', () => {
+    const sample = `JSONSetElement ( "{}"; ["url"; $url; JSONString]; ["method"; "GET"; JSONString]; ["headers.X-API-KEY"; $apiKey; JSONString] )`;
+    const expected = dedent`
+    JSONSetElement (
+      "{}";
+      ["url"; $url; JSONString];
+      ["method"; "GET"; JSONString];
+      ["headers.X-API-KEY"; $apiKey; JSONString]
+    )`;
+    const result = prettyPrintFileMakerCalculation(sample);
+    expect(result).toBe(expected);
+  });
+
+  it('properly formats nested Substitute functions', () => {
+    const sample = `Substitute ( Substitute ( Substitute ( $text; ["old1"; "new1"]; ["old2"; "new2"] ); ["old3"; "new3"] ); ["final"; "replacement"] )`;
+    const expected = dedent`
+    Substitute (
+      Substitute (
+        Substitute (
+          $text;
+          ["old1"; "new1"];
+          ["old2"; "new2"]
+        );
+        ["old3"; "new3"]
+      );
+      ["final"; "replacement"]
+    )`;
+    const result = prettyPrintFileMakerCalculation(sample);
+    expect(result).toBe(expected);
+  });
 });

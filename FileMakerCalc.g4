@@ -15,6 +15,7 @@ expression
     | IDENTIFIER                                              # VariableExpr
     | '(' expression ')'                                      # ParenExpr
     | expression '[' expression ']'                           # RepetitionExpr
+    | '[' expression (';' expression)+ ']'                    # ArrayNotationExpr
     | expression op=('*' | '/') expression                    # MultiplicativeExpr
     | expression op=('+' | '-') expression                    # AdditiveExpr
     | expression '&' expression                               # ConcatenationExpr
@@ -37,7 +38,11 @@ functionCall
     ;
 
 argumentList
-    : expression ((',' | ';') expression)*
+    : (expression | arrayNotation) (';' (expression | arrayNotation))*
+    ;
+
+arrayNotation
+    : '[' expression (';' expression)+ ']'
     ;
 
 fieldReference

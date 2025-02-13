@@ -12,6 +12,7 @@ import { LocalVarExprContext } from "./FileMakerCalcParser";
 import { VariableExprContext } from "./FileMakerCalcParser";
 import { ParenExprContext } from "./FileMakerCalcParser";
 import { RepetitionExprContext } from "./FileMakerCalcParser";
+import { ArrayNotationExprContext } from "./FileMakerCalcParser";
 import { MultiplicativeExprContext } from "./FileMakerCalcParser";
 import { AdditiveExprContext } from "./FileMakerCalcParser";
 import { ConcatenationExprContext } from "./FileMakerCalcParser";
@@ -29,6 +30,7 @@ import { LetFunctionContext } from "./FileMakerCalcParser";
 import { VariableDeclarationContext } from "./FileMakerCalcParser";
 import { FunctionCallContext } from "./FileMakerCalcParser";
 import { ArgumentListContext } from "./FileMakerCalcParser";
+import { ArrayNotationContext } from "./FileMakerCalcParser";
 import { FieldReferenceContext } from "./FileMakerCalcParser";
 import { LiteralContext } from "./FileMakerCalcParser";
 
@@ -112,6 +114,14 @@ export interface FileMakerCalcVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitRepetitionExpr?: (ctx: RepetitionExprContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by the `ArrayNotationExpr`
+	 * labeled alternative in `FileMakerCalcParser.expression`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitArrayNotationExpr?: (ctx: ArrayNotationExprContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by the `MultiplicativeExpr`
@@ -242,6 +252,13 @@ export interface FileMakerCalcVisitor<Result> extends ParseTreeVisitor<Result> {
 	 * @return the visitor result
 	 */
 	visitArgumentList?: (ctx: ArgumentListContext) => Result;
+
+	/**
+	 * Visit a parse tree produced by `FileMakerCalcParser.arrayNotation`.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	visitArrayNotation?: (ctx: ArrayNotationContext) => Result;
 
 	/**
 	 * Visit a parse tree produced by `FileMakerCalcParser.fieldReference`.

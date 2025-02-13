@@ -194,8 +194,9 @@ export const TextFunctions: FunctionDefinition[] = [
   {
     name: 'Substitute',
     minArgs: 3,
-    maxArgs: 3,
-    description: 'Returns text with searchString replaced by replaceString',
+    maxArgs: Infinity,
+    description:
+      'Returns text with searchString replaced by replaceString. Can accept multiple pairs of search and replace strings.',
   },
   {
     name: 'Trim',
