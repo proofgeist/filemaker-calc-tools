@@ -6,9 +6,6 @@
     "type": "git",
     "url": "git+https://github.com/proofgeist/filemaker-calc-tools.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
   "types": "./dist/types/index.d.ts",
